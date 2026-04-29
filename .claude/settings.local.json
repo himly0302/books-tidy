@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(claude mcp:*)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(rm -rf .git)",
+      "Bash(git init *)",
+      "Bash(npm install *)",
+      "Bash(npx tsc *)",
+      "Bash(npm run *)",
+      "Bash(node dist/index.js --help)",
+      "Bash(node dist/index.js analyze --help)",
+      "Bash(mkdir -p /tmp/test-books/\"三体-刘慈欣\" /tmp/test-books/\"活着-余华\" /tmp/test-books/\"经济学原理-曼昆\")",
+      "Bash(touch \"/tmp/test-books/三体-刘慈欣/封面.jpg\" \"/tmp/test-books/活着-余华/封面.png\" \"/tmp/test-books/经济学原理-曼昆/cover.jpg\")",
+      "Bash(node dist/index.js analyze -i /tmp/test-books)",
+      "Bash(node dist/index.js tidy -i /tmp/test-books -o /tmp/test-output)",
+      "Bash(node dist/index.js analyze -i \"D:/BaiduNetdiskDownload/图书测试\")",
+      "Bash(node dist/index.js tidy -i \"D:/BaiduNetdiskDownload/图书测试\" -o \"D:/BaiduNetdiskDownload/图书测试_已整理\")",
+      "Bash(git rm *)"
+    ]
+  }
+}
