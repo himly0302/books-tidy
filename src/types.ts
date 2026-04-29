@@ -10,6 +10,7 @@ export interface BookInfo {
   author: string;
   type: string;
   pic: string;
+  picUrl?: string;
   addedAt: string;
 }
 
@@ -30,4 +31,13 @@ export interface TidyOptions {
 
 export interface AnalyzeOptions {
   input: string;
+}
+
+export interface UploadPicsOptions {
+  db: string;
+  output: string;
+}
+
+export interface ImageUploader {
+  upload(localFilePath: string, remoteKey: string): Promise<string>;
 }

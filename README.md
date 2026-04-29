@@ -28,8 +28,21 @@ npm run dev -- tidy --input ./raw-books --output ./organized
 ```bash
 books-tidy tidy --input <目录> --output <目录>   # 整理书籍
 books-tidy analyze --input <目录>                  # 预览分析结果
-books-tidy upload-pics --db <json文件>             # 上传图片到图床
+books-tidy upload-pics --db <json文件> --output <目录>  # 上传图片到图床
 ```
+
+## 环境变量
+
+| 变量 | 说明 |
+|------|------|
+| `AI_BASE_URL` | AI API 基础 URL |
+| `AI_API_KEY` | API 密钥 |
+| `AI_MODEL` | 模型名称 |
+| `QINIU_ACCESS_KEY` | 七牛云 Access Key |
+| `QINIU_SECRET_KEY` | 七牛云 Secret Key |
+| `QINIU_BUCKET` | 七牛云存储空间名称 |
+| `QINIU_DOMAIN` | 七牛云 CDN 加速域名 |
+| `QINIU_ZONE` | 存储区域（z0=华东 z1=华北 z2=华南 na0=北美 as0=东南亚） |
 
 ## 文档
 

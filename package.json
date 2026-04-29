@@ -20,6 +20,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^20.0.0",
+    "@types/sharp": "^0.31.1",
     "@types/uuid": "^10.0.0",
     "ts-node": "^10.0.0",
     "typescript": "^5.0.0"
@@ -27,6 +28,8 @@
   "dependencies": {
     "commander": "^11.0.0",
     "dotenv": "^17.4.2",
+    "qiniu": "^7.15.2",
+    "sharp": "^0.34.5",
     "uuid": "^14.0.0"
   }
 }

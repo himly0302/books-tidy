@@ -48,3 +48,14 @@ export function addBooks(
 
   return newDb;
 }
+
+export function updateBookPicUrl(
+  db: BooksDatabase,
+  bookId: string,
+  picUrl: string,
+): void {
+  const book = db.books.find((b) => b.id === bookId);
+  if (book) {
+    book.picUrl = picUrl;
+  }
+}
