@@ -1,0 +1,25 @@
+{
+  "name": "books-tidy",
+  "version": "1.0.0",
+  "description": "A CLI tool for tidying books",
+  "main": "dist/index.js",
+  "bin": {
+    "books-tidy": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts"
+  },
+  "keywords": ["books", "tidy", "cli"],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "ts-node": "^10.0.0"
+  },
+  "dependencies": {
+    "commander": "^11.0.0"
+  }
+}
