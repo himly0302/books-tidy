@@ -3,7 +3,7 @@ import { BookRaw, AIAnalysisResult } from './types';
 const MAX_RETRIES = 3;
 const RETRY_DELAY_MS = 2000;
 const BATCH_SIZE = 60;
-const DEFAULT_CONCURRENCY = 3;
+const DEFAULT_CONCURRENCY = 2;
 
 export async function analyzeBooks(books: BookRaw[]): Promise<AIAnalysisResult[]> {
   const baseUrl = process.env.AI_BASE_URL;
@@ -69,6 +69,12 @@ async function analyzeBatch(
     });
 
     if (!response.ok) {
+      if (response.status === 429 && attempt < MAX_RETRIES) {
+        const delay = RETRY_DELAY_MS * attempt;
+        console.log(`  API 速率限制，${delay / 1000}s 后重试 (${attempt}/${MAX_RETRIES})...`);
+        await sleep(delay);
+        continue;
+      }
       const text = await response.text();
       throw new Error(`AI API error ${response.status}: ${text}`);
     }
