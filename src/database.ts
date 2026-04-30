@@ -76,15 +76,16 @@ export function addBooks(
     if (existingKeys.has(nameKey)) continue;
     existingKeys.add(nameKey);
 
-    const ext = book.pics[0] ? path.extname(book.pics[0]) : '.jpg';
-    const picHash = hashName(analysis.name) + ext;
+    const hasPic = book.pics.length > 0;
+    const ext = hasPic ? path.extname(book.pics[0]) : '';
+    const picHash = hasPic ? hashName(analysis.name) + ext : '';
 
     const entry: BookInfo = {
       id: uuidv4(),
       name: analysis.name,
       author: analysis.author,
       type: analysis.type,
-      pic: `${analysis.type}/${analysis.name}/${picHash}`,
+      pic: hasPic ? `${analysis.type}/${analysis.name}/${picHash}` : '',
       sourceFolder: book.folderName,
       addedAt: new Date().toISOString(),
     };

@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Fixed
+- **数据修正**：书籍文件夹无图片时，pic 字段置空而非生成不存在的路径
+  - 相关文件：`src/database.ts`、`src/organizer.ts`、`src/upload-pics.ts`
+
 ### Added
 - **去重**：整理时自动跳过已处理的书籍，避免重复记录
   - 本地去重：基于 output 目录 books.json 中的 sourceFolder 字段

@@ -19,8 +19,8 @@ export function organizeBooks(
     // Copy all files, rename first image to hash(name).ext
     const allFiles = collectFiles(book.folderPath);
     const firstPic = book.pics[0] || '';
-    const firstPicExt = firstPic ? path.extname(firstPic) : '.jpg';
-    const hashedName = hashName(analysis.name) + firstPicExt;
+    const firstPicExt = firstPic ? path.extname(firstPic) : '';
+    const hashedName = firstPic ? hashName(analysis.name) + firstPicExt : '';
 
     for (const file of allFiles) {
       const relPath = path.relative(book.folderPath, file);

@@ -17,7 +17,7 @@ export async function uploadPicsCommand(options: UploadPicsOptions): Promise<voi
   const db = loadDatabase(dbPath);
   const uploader = new QiniuUploader();
 
-  const pending = db.books.filter((b) => !b.picUrl);
+  const pending = db.books.filter((b) => !b.picUrl && b.pic);
   const skipped = db.books.length - pending.length;
 
   console.log(`共 ${db.books.length} 本书籍，${skipped} 本已有 picUrl 跳过，${pending.length} 本待上传`);
