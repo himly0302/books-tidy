@@ -3,7 +3,7 @@ import { BookRaw, AIAnalysisResult } from './types';
 const MAX_RETRIES = 3;
 const RETRY_DELAY_MS = 2000;
 const BATCH_SIZE = 60;
-const DEFAULT_CONCURRENCY = 2;
+const DEFAULT_CONCURRENCY = 3;
 
 export async function analyzeBooks(books: BookRaw[]): Promise<AIAnalysisResult[]> {
   const baseUrl = process.env.AI_BASE_URL;

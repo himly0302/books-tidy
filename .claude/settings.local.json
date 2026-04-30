@@ -23,7 +23,10 @@
       "Bash(git reset *)",
       "Bash(node -e \"const q=require\\('qiniu'\\); const s=require\\('sharp'\\); console.log\\('qiniu:', typeof q\\); console.log\\('sharp:', typeof s\\)\")",
       "Bash(node *)",
-      "Bash(curl *)"
+      "Bash(curl *)",
+      "Bash(git checkout *)",
+      "Bash(tasklist)",
+      "Bash(taskkill *)"
     ]
   }
 }
