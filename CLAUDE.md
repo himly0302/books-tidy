@@ -23,8 +23,9 @@ npm start -- tidy --input <目录> --output <目录>      # 运行编译后的 J
 - `src/scanner.ts` — 同步文件系统扫描器；读取子目录，递归查找图片文件
 - `src/analyzer.ts` — 将所有文件夹名一次性批量发送给 AI API；包含重试逻辑（3 次尝试）和 JSON 响应解析（支持 markdown 代码块提取）
 - `src/organizer.ts` — 将文件复制到 `{output}/{类型}/{书名}/` 结构；将首张图片重命名为 `{md5(书名)[:8]}.ext`
-- `src/database.ts` — JSON 持久化（`books.json`）；将新条目合并到已有数据库
-- `src/tidy.ts` — 编排完整 tidy 流程（扫描 → 分析 → 整理 → 保存）
+- `src/database.ts` — JSON 持久化（`books.json`）；将新条目合并到已有数据库；本地去重（`filterDuplicateBooks`）和名称标准化（`normalizeBookName`）
+- `src/tidy.ts` — 编排完整 tidy 流程（扫描 → 去重过滤 → 分析 → 整理 → 保存 → 记录全局历史）
+- `src/history.ts` — 全局历史记录管理（`~/.books-tidy/history.json`）；跨目录去重
 - `src/analyze.ts` — 编排预览流程（仅扫描 → 分析）
 - `src/types.ts` — 接口定义：`BookRaw`、`BookInfo`、`BooksDatabase`、`AIAnalysisResult` 及选项类型
 - `src/qiniu/client.ts` — 七牛云共享客户端（认证 + 配置，单例模式）
@@ -38,6 +39,7 @@ npm start -- tidy --input <目录> --output <目录>      # 运行编译后的 J
 - 文件为复制（非移动）到输出目录
 - 图片命名使用 MD5 哈希截取前 8 位十六进制字符
 - AI 提示词为中文，指导模型清洗书名（去除营销前缀、卷册标注）、仅保留主要作者、分类到 17 种类型
+- 两级去重策略：本地去重（`books.json` 中 `sourceFolder` 精确匹配）→ 全局历史去重（`~/.books-tidy/history.json`）→ 名称级去重（`normalizeBookName` 标准化后匹配，兜底旧记录和 AI 名称不一致）
 
 ## 环境变量
 

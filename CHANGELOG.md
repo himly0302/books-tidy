@@ -3,6 +3,12 @@
 ## [Unreleased]
 
 ### Added
+- **去重**：整理时自动跳过已处理的书籍，避免重复记录
+  - 本地去重：基于 output 目录 books.json 中的 sourceFolder 字段
+  - 全局历史：`~/.books-tidy/history.json` 跨目录去重
+  - 名称标准化兜底：处理 AI 返回名称不一致和旧格式记录
+  - BookInfo 新增 sourceFolder 字段
+  - 相关文件：`src/database.ts`、`src/history.ts`、`src/tidy.ts`
 - **七牛云空间管理**：新增 `qiniu` 命令组，支持列出空间、列出文件、删除空间
   - `qiniu buckets` 列出所有存储空间
   - `qiniu files --bucket <name>` 列出空间内文件
