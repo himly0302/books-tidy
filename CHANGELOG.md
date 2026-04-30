@@ -19,6 +19,9 @@
   - 相关文件：`src/upload-pics.ts`、`src/uploader.ts`、`src/uploaders/qiniu.ts`
 
 ### Changed
+- **七牛云存储格式调整**：上传 key 从 `books/{type}/{name}/{hash}.jpg` 改为 `books-tidy/{id}.jpg`，使用 UUID 命名避免路径中的中文字符
+  - URL 更短更简洁，无 URL 编码问题
+  - 相关文件：`src/upload-pics.ts`
 - **优化 AI 分析结果质量**：重写 Prompt 提示词，清洗书名营销前缀/套数标注，只保留主作者，综合判断分类
   - pic 文件名改为 hash(name).jpg 格式
   - 精简 BookInfo 数据结构，移除 originalFolder、typeFolder 冗余字段

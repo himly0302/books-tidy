@@ -47,7 +47,7 @@ export async function uploadPicsCommand(options: UploadPicsOptions): Promise<voi
     let tmpFile: string | null = null;
     try {
       tmpFile = await compressImage(localPicPath);
-      const remoteKey = `books/${book.pic}`;
+      const remoteKey = `books-tidy/${book.id}.jpg`;
       const url = await uploader.upload(tmpFile, remoteKey);
 
       updateBookPicUrl(db, book.id, url);
