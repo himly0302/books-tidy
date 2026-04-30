@@ -2,6 +2,7 @@ import { BookRaw, AIAnalysisResult } from './types';
 
 const MAX_RETRIES = 3;
 const RETRY_DELAY_MS = 2000;
+const BATCH_SIZE = 30;
 
 export async function analyzeBooks(books: BookRaw[]): Promise<AIAnalysisResult[]> {
   const baseUrl = process.env.AI_BASE_URL;
@@ -12,6 +13,29 @@ export async function analyzeBooks(books: BookRaw[]): Promise<AIAnalysisResult[]
     throw new Error('Missing AI configuration. Set AI_BASE_URL, AI_API_KEY, AI_MODEL in .env');
   }
 
+  const batches: BookRaw[][] = [];
+  for (let i = 0; i < books.length; i += BATCH_SIZE) {
+    batches.push(books.slice(i, i + BATCH_SIZE));
+  }
+
+  const allResults: AIAnalysisResult[] = [];
+  for (let i = 0; i < batches.length; i++) {
+    if (batches.length > 1) {
+      console.log(`分析中 (${i + 1}/${batches.length})...`);
+    }
+    const results = await analyzeBatch(batches[i], baseUrl, apiKey, model);
+    allResults.push(...results);
+  }
+
+  return allResults;
+}
+
+async function analyzeBatch(
+  books: BookRaw[],
+  baseUrl: string,
+  apiKey: string,
+  model: string,
+): Promise<AIAnalysisResult[]> {
   const folderNames = books.map(b => b.folderName);
   const prompt = buildPrompt(folderNames);
 
