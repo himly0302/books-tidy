@@ -19,7 +19,7 @@ npm start -- tidy --input <目录> --output <目录>      # 运行编译后的 J
 
 线性流水线：**扫描 → AI 分析 → 整理 → 存储**
 
-- `src/index.ts` — CLI 入口（使用 Commander，包含 `tidy` 和 `analyze` 子命令）
+- `src/index.ts` — CLI 入口（使用 Commander，包含 `tidy`、`analyze`、`upload-pics`、`qiniu` 子命令）
 - `src/scanner.ts` — 同步文件系统扫描器；读取子目录，递归查找图片文件
 - `src/analyzer.ts` — 将所有文件夹名一次性批量发送给 AI API；包含重试逻辑（3 次尝试）和 JSON 响应解析（支持 markdown 代码块提取）
 - `src/organizer.ts` — 将文件复制到 `{output}/{类型}/{书名}/` 结构；将首张图片重命名为 `{md5(书名)[:8]}.ext`
@@ -27,6 +27,9 @@ npm start -- tidy --input <目录> --output <目录>      # 运行编译后的 J
 - `src/tidy.ts` — 编排完整 tidy 流程（扫描 → 分析 → 整理 → 保存）
 - `src/analyze.ts` — 编排预览流程（仅扫描 → 分析）
 - `src/types.ts` — 接口定义：`BookRaw`、`BookInfo`、`BooksDatabase`、`AIAnalysisResult` 及选项类型
+- `src/qiniu/client.ts` — 七牛云共享客户端（认证 + 配置，单例模式）
+- `src/qiniu/bucket-manager.ts` — 七牛云空间管理操作（列空间、列文件、批量删除、删空间）
+- `src/qiniu-manage.ts` — `qiniu` 命令编排器（buckets / files / delete-bucket 子命令）
 
 ## 关键模式
 
@@ -47,5 +50,6 @@ npm start -- tidy --input <目录> --output <目录>      # 运行编译后的 J
 
 - TypeScript 严格模式，ES2020 目标，CommonJS 模块
 - 尚未配置测试框架和代码检查工具
-- `upload-pics` 命令已规划但未实现
+- `upload-pics` 命令用于批量上传书籍封面到七牛云图床
+- `qiniu` 命令组用于七牛云空间管理（列出空间、列出文件、删除空间）
 - `output/` 目录已加入 gitignore（存放生成的结果）

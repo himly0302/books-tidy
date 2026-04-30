@@ -3,6 +3,12 @@
 ## [Unreleased]
 
 ### Added
+- **七牛云空间管理**：新增 `qiniu` 命令组，支持列出空间、列出文件、删除空间
+  - `qiniu buckets` 列出所有存储空间
+  - `qiniu files --bucket <name>` 列出空间内文件
+  - `qiniu delete-bucket --bucket <name>` 清空文件并删除空间（含确认提示）
+  - 提取共享客户端模块 `src/qiniu/client.ts`，供上传和空间管理复用
+  - 相关文件：`src/qiniu/client.ts`、`src/qiniu/bucket-manager.ts`、`src/qiniu-manage.ts`
 - **AI 分析分批处理**：大量书籍自动拆分为多个批次调用 AI API，避免 token 超限导致结果不完整
   - 每批最多处理 30 本书，多批次时显示进度
   - 相关文件：`src/analyzer.ts`

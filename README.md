@@ -29,6 +29,9 @@ npm run dev -- tidy --input ./raw-books --output ./organized
 books-tidy tidy --input <目录> --output <目录>   # 整理书籍
 books-tidy analyze --input <目录>                  # 预览分析结果
 books-tidy upload-pics --db <json文件> --output <目录>  # 上传图片到图床
+books-tidy qiniu buckets                           # 列出所有七牛云空间
+books-tidy qiniu files --bucket <name>             # 列出空间内文件
+books-tidy qiniu delete-bucket --bucket <name>     # 删除空间（先清空文件）
 ```
 
 ## 环境变量
