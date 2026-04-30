@@ -25,6 +25,9 @@
   - 相关文件：`src/upload-pics.ts`、`src/uploader.ts`、`src/uploaders/qiniu.ts`
 
 ### Changed
+- **AI 分析并行化**：多个批次并发调用 AI API，大幅缩短大量书籍的分析耗时
+  - 默认并发数 3，可通过 `AI_CONCURRENCY` 环境变量调整
+  - 相关文件：`src/analyzer.ts`
 - **七牛云存储格式调整**：上传 key 从 `books/{type}/{name}/{hash}.jpg` 改为 `books-tidy/{id}.jpg`，使用 UUID 命名避免路径中的中文字符
   - URL 更短更简洁，无 URL 编码问题
   - 相关文件：`src/upload-pics.ts`

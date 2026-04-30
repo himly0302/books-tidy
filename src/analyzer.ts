@@ -2,7 +2,8 @@ import { BookRaw, AIAnalysisResult } from './types';
 
 const MAX_RETRIES = 3;
 const RETRY_DELAY_MS = 2000;
-const BATCH_SIZE = 30;
+const BATCH_SIZE = 60;
+const DEFAULT_CONCURRENCY = 3;
 
 export async function analyzeBooks(books: BookRaw[]): Promise<AIAnalysisResult[]> {
   const baseUrl = process.env.AI_BASE_URL;
@@ -18,16 +19,29 @@ export async function analyzeBooks(books: BookRaw[]): Promise<AIAnalysisResult[]
     batches.push(books.slice(i, i + BATCH_SIZE));
   }
 
-  const allResults: AIAnalysisResult[] = [];
-  for (let i = 0; i < batches.length; i++) {
-    if (batches.length > 1) {
-      console.log(`分析中 (${i + 1}/${batches.length})...`);
-    }
-    const results = await analyzeBatch(batches[i], baseUrl, apiKey, model);
-    allResults.push(...results);
+  if (batches.length <= 1) {
+    return analyzeBatch(batches[0], baseUrl, apiKey, model);
   }
 
-  return allResults;
+  const concurrency = Math.max(1, parseInt(process.env.AI_CONCURRENCY || '', 10) || DEFAULT_CONCURRENCY);
+  console.log(`分析中 (共 ${batches.length} 批，并发 ${concurrency})...`);
+
+  const allResults: AIAnalysisResult[][] = new Array(batches.length);
+  let nextIndex = 0;
+
+  const worker = async (): Promise<void> => {
+    while (nextIndex < batches.length) {
+      const idx = nextIndex++;
+      const results = await analyzeBatch(batches[idx], baseUrl, apiKey, model);
+      allResults[idx] = results;
+      console.log(`  分析完成 (${idx + 1}/${batches.length})`);
+    }
+  };
+
+  const workers = Array.from({ length: Math.min(concurrency, batches.length) }, () => worker());
+  await Promise.all(workers);
+
+  return allResults.flat();
 }
 
 async function analyzeBatch(
@@ -40,7 +54,8 @@ async function analyzeBatch(
   const prompt = buildPrompt(folderNames);
 
   for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
-    const response = await fetch(`${baseUrl}/v1/chat/completions`, {
+    const url = baseUrl.replace(/\/+$/, '');
+    const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

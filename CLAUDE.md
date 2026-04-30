@@ -21,7 +21,7 @@ npm start -- tidy --input <目录> --output <目录>      # 运行编译后的 J
 
 - `src/index.ts` — CLI 入口（使用 Commander，包含 `tidy`、`analyze`、`upload-pics`、`qiniu` 子命令）
 - `src/scanner.ts` — 同步文件系统扫描器；读取子目录，递归查找图片文件
-- `src/analyzer.ts` — 将所有文件夹名一次性批量发送给 AI API；包含重试逻辑（3 次尝试）和 JSON 响应解析（支持 markdown 代码块提取）
+- `src/analyzer.ts` — 将文件夹名分批发送给 AI API，多批次并发执行；包含重试逻辑（3 次尝试）和 JSON 响应解析（支持 markdown 代码块提取）
 - `src/organizer.ts` — 将文件复制到 `{output}/{类型}/{书名}/` 结构；将首张图片重命名为 `{md5(书名)[:8]}.ext`
 - `src/database.ts` — JSON 持久化（`books.json`）；将新条目合并到已有数据库；本地去重（`filterDuplicateBooks`）和名称标准化（`normalizeBookName`）
 - `src/tidy.ts` — 编排完整 tidy 流程（扫描 → 去重过滤 → 分析 → 整理 → 保存 → 记录全局历史）
@@ -35,7 +35,7 @@ npm start -- tidy --input <目录> --output <目录>      # 运行编译后的 J
 ## 关键模式
 
 - 除 AI API 异步调用外，所有文件系统操作均为同步
-- AI 调用采用批量方式：一次性发送所有文件夹名（非逐本调用）
+- AI 调用采用批量方式：分批发送文件夹名，多批次并发执行（默认并发数 3）
 - 文件为复制（非移动）到输出目录
 - 图片命名使用 MD5 哈希截取前 8 位十六进制字符
 - AI 提示词为中文，指导模型清洗书名（去除营销前缀、卷册标注）、仅保留主要作者、分类到 17 种类型
@@ -47,6 +47,7 @@ npm start -- tidy --input <目录> --output <目录>      # 运行编译后的 J
 - `AI_BASE_URL` — AI API 基础 URL
 - `AI_API_KEY` — API 密钥
 - `AI_MODEL` — 模型名称（如 `ZhipuAI/GLM-5.1`）
+- `AI_CONCURRENCY` — AI 分析并发数（默认 3）
 
 ## 备注
 
