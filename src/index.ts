@@ -8,6 +8,7 @@ import { uploadPicsCommand } from './upload-pics';
 import { listBucketsCommand, listFilesCommand, deleteBucketCommand } from './qiniu-manage';
 import { importLinksCommand } from './import-links';
 import { exportExcelCommand } from './export-excel';
+import { mergeCommand } from './merge';
 
 const program = new Command();
 
@@ -42,6 +43,12 @@ program.command('export-excel')
   .description('按类型分 sheet 导出 Excel 文件')
   .requiredOption('--db <file>', 'books.json 数据库文件路径')
   .action(exportExcelCommand);
+
+program.command('merge')
+  .description('将新数据中的 brief 字段合并到旧数据')
+  .requiredOption('--old <file>', '旧数据 JSON 文件（基准）')
+  .requiredOption('--new <file>', '新数据 JSON 文件（来源 brief）')
+  .action(mergeCommand);
 
 const qiniuCmd = program.command('qiniu').description('七牛云空间管理');
 

@@ -12,6 +12,9 @@
   - 每个 sheet 包含：书名、作者、类型、百度云盘、添加时间
   - 输出到 result/YYYYMMDD-{数量}.xlsx
   - 相关文件：`src/export-excel.ts`
+- **数据合并**：新增 `merge` 命令，按 sourceFolder 匹配将新数据的 brief 字段合并到旧数据
+  - 旧数据保持为基准，仅追加 brief
+  - 相关文件：`src/merge.ts`
 
 ### Changed
 - **AI 分析增强**：提取书名/作者时同步生成简介（brief），新增核查模式可修正作者信息
