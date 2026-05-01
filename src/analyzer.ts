@@ -1,29 +1,21 @@
 import { BookRaw, AIAnalysisResult } from './types';
-
-const MAX_RETRIES = 3;
-const RETRY_DELAY_MS = 2000;
-const BATCH_SIZE = 60;
-const DEFAULT_CONCURRENCY = 3;
+import { ai } from './config';
 
 export async function analyzeBooks(books: BookRaw[]): Promise<AIAnalysisResult[]> {
-  const baseUrl = process.env.AI_BASE_URL;
-  const apiKey = process.env.AI_API_KEY;
-  const model = process.env.AI_MODEL;
-
-  if (!baseUrl || !apiKey || !model) {
+  if (!ai.baseUrl || !ai.apiKey || !ai.model) {
     throw new Error('Missing AI configuration. Set AI_BASE_URL, AI_API_KEY, AI_MODEL in .env');
   }
 
   const batches: BookRaw[][] = [];
-  for (let i = 0; i < books.length; i += BATCH_SIZE) {
-    batches.push(books.slice(i, i + BATCH_SIZE));
+  for (let i = 0; i < books.length; i += ai.batchSize) {
+    batches.push(books.slice(i, i + ai.batchSize));
   }
 
   if (batches.length <= 1) {
-    return analyzeBatch(batches[0], baseUrl, apiKey, model);
+    return analyzeBatch(batches[0], ai.baseUrl, ai.apiKey, ai.model);
   }
 
-  const concurrency = Math.max(1, parseInt(process.env.AI_CONCURRENCY || '', 10) || DEFAULT_CONCURRENCY);
+  const concurrency = ai.concurrency;
   console.log(`分析中 (共 ${batches.length} 批，并发 ${concurrency})...`);
 
   const allResults: AIAnalysisResult[][] = new Array(batches.length);
@@ -32,7 +24,7 @@ export async function analyzeBooks(books: BookRaw[]): Promise<AIAnalysisResult[]
   const worker = async (): Promise<void> => {
     while (nextIndex < batches.length) {
       const idx = nextIndex++;
-      const results = await analyzeBatch(batches[idx], baseUrl, apiKey, model);
+      const results = await analyzeBatch(batches[idx], ai.baseUrl!, ai.apiKey!, ai.model!);
       allResults[idx] = results;
       console.log(`  分析完成 (${idx + 1}/${batches.length})`);
     }
@@ -53,7 +45,7 @@ async function analyzeBatch(
   const folderNames = books.map(b => b.folderName);
   const prompt = buildPrompt(folderNames);
 
-  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+  for (let attempt = 1; attempt <= ai.maxRetries; attempt++) {
     const url = baseUrl.replace(/\/+$/, '');
     const response = await fetch(url, {
       method: 'POST',
@@ -64,14 +56,14 @@ async function analyzeBatch(
       body: JSON.stringify({
         model,
         messages: [{ role: 'user', content: prompt }],
-        temperature: 0.1,
+        temperature: ai.temperature,
       }),
     });
 
     if (!response.ok) {
-      if (response.status === 429 && attempt < MAX_RETRIES) {
-        const delay = RETRY_DELAY_MS * attempt;
-        console.log(`  API 速率限制，${delay / 1000}s 后重试 (${attempt}/${MAX_RETRIES})...`);
+      if (response.status === 429 && attempt < ai.maxRetries) {
+        const delay = ai.retryDelay * attempt;
+        console.log(`  API 速率限制，${delay / 1000}s 后重试 (${attempt}/${ai.maxRetries})...`);
         await sleep(delay);
         continue;
       }
@@ -83,12 +75,12 @@ async function analyzeBatch(
     const content = data.choices?.[0]?.message?.content ?? '';
 
     if (!content) {
-      if (attempt < MAX_RETRIES) {
-        console.log(`  AI returned empty response, retrying (${attempt}/${MAX_RETRIES})...`);
-        await sleep(RETRY_DELAY_MS);
+      if (attempt < ai.maxRetries) {
+        console.log(`  AI returned empty response, retrying (${attempt}/${ai.maxRetries})...`);
+        await sleep(ai.retryDelay);
         continue;
       }
-      throw new Error(`Empty AI response after ${MAX_RETRIES} retries.`);
+      throw new Error(`Empty AI response after ${ai.maxRetries} retries.`);
     }
 
     return parseAIResponse(content, folderNames);
@@ -103,7 +95,7 @@ function sleep(ms: number): Promise<void> {
 
 function buildPrompt(folderNames: string[]): string {
   const list = folderNames.map((n, i) => `${i + 1}. ${n}`).join('\n');
-  const verifyEnabled = process.env.AI_VERIFY !== 'false';
+  const verifyEnabled = ai.verify;
 
   let rules = `你是一个专业的书籍信息提取助手。从以下书籍文件夹名称中提取每本书的书名、作者、分类和简介。
 

@@ -2,6 +2,7 @@ import * as path from 'path';
 import * as os from 'os';
 import * as fs from 'fs';
 import sharp from 'sharp';
+import { upload } from './config';
 
 export async function compressImage(filePath: string): Promise<string> {
   const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'books-tidy-'));
@@ -9,8 +10,8 @@ export async function compressImage(filePath: string): Promise<string> {
 
   await sharp(filePath, { failOn: 'none' })
     .rotate()
-    .resize({ width: 1200, withoutEnlargement: true })
-    .jpeg({ quality: 80, mozjpeg: true })
+    .resize({ width: upload.maxWidth, withoutEnlargement: true })
+    .jpeg({ quality: upload.jpegQuality, mozjpeg: true })
     .toFile(tmpFile);
 
   return tmpFile;

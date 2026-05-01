@@ -39,16 +39,36 @@ books-tidy qiniu delete-bucket --bucket <name>     # 删除空间（先清空文
 
 ## 环境变量
 
-| 变量 | 说明 |
-|------|------|
-| `AI_BASE_URL` | AI API 基础 URL |
-| `AI_API_KEY` | API 密钥 |
-| `AI_MODEL` | 模型名称 |
-| `QINIU_ACCESS_KEY` | 七牛云 Access Key |
-| `QINIU_SECRET_KEY` | 七牛云 Secret Key |
-| `QINIU_BUCKET` | 七牛云存储空间名称 |
-| `QINIU_DOMAIN` | 七牛云 CDN 加速域名 |
-| `QINIU_ZONE` | 存储区域（z0=华东 z1=华北 z2=华南 na0=北美 as0=东南亚） |
+### AI 分析
+
+| 变量 | 说明 | 默认值 |
+|------|------|--------|
+| `AI_BASE_URL` | AI API 基础 URL（必填） | - |
+| `AI_API_KEY` | API 密钥（必填） | - |
+| `AI_MODEL` | 模型名称（必填） | - |
+| `AI_CONCURRENCY` | 批次并发数 | 3 |
+| `AI_VERIFY` | 核查模式（false 关闭） | true |
+| `AI_BATCH_SIZE` | 每批处理数量 | 60 |
+| `AI_TEMPERATURE` | 采样温度 | 0.1 |
+| `AI_MAX_RETRIES` | 最大重试次数 | 3 |
+| `AI_RETRY_DELAY` | 重试间隔（毫秒） | 2000 |
+
+### 七牛云图床
+
+| 变量 | 说明 | 默认值 |
+|------|------|--------|
+| `QINIU_ACCESS_KEY` | Access Key（必填） | - |
+| `QINIU_SECRET_KEY` | Secret Key（必填） | - |
+| `QINIU_BUCKET` | 存储空间名称（必填） | - |
+| `QINIU_DOMAIN` | CDN 加速域名（必填） | - |
+| `QINIU_ZONE` | 存储区域 | z0 |
+
+### 图片上传
+
+| 变量 | 说明 | 默认值 |
+|------|------|--------|
+| `UPLOAD_MAX_WIDTH` | 最大宽度（像素） | 1200 |
+| `UPLOAD_JPEG_QUALITY` | JPEG 压缩质量 | 80 |
 
 ## 文档
 

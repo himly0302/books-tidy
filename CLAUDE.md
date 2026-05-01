@@ -21,7 +21,8 @@ npm start -- tidy --input <目录> --output <目录>      # 运行编译后的 J
 
 - `src/index.ts` — CLI 入口（使用 Commander，包含 `tidy`、`analyze`、`upload-pics`、`import-links`、`export-excel`、`qiniu` 子命令）
 - `src/scanner.ts` — 同步文件系统扫描器；读取子目录，递归查找图片文件
-- `src/analyzer.ts` — 将文件夹名分批发送给 AI API，多批次并发执行；包含重试逻辑（3 次尝试）和 JSON 响应解析（支持 markdown 代码块提取）
+- `src/config.ts` — 集中管理所有环境变量配置（AI、七牛云、图片上传），提供默认值
+- `src/analyzer.ts` — 将文件夹名分批发送给 AI API，多批次并发执行；包含重试逻辑和 JSON 响应解析（支持 markdown 代码块提取）
 - `src/organizer.ts` — 将文件复制到 `{output}/{类型}/{书名}/` 结构；将首张图片重命名为 `{md5(书名)[:8]}.ext`
 - `src/database.ts` — JSON 持久化（`books.json`）；将新条目合并到已有数据库；本地去重（`filterDuplicateBooks`）和名称标准化（`normalizeBookName`）
 - `src/tidy.ts` — 编排完整 tidy 流程（扫描 → 去重过滤 → 分析 → 整理 → 保存 → 记录全局历史）
@@ -46,12 +47,20 @@ npm start -- tidy --input <目录> --output <目录>      # 运行编译后的 J
 
 ## 环境变量
 
-需在 `.env` 中配置（参考 `.env.example`）：
-- `AI_BASE_URL` — AI API 基础 URL
-- `AI_API_KEY` — API 密钥
-- `AI_MODEL` — 模型名称（如 `ZhipuAI/GLM-5.1`）
-- `AI_CONCURRENCY` — AI 分析并发数（默认 3）
-- `AI_VERIFY` — 核查模式开关，设为 `false` 关闭（默认开启）
+所有配置通过 `src/config.ts` 统一管理，在 `.env` 中设置（参考 `.env.example`）：
+
+- **AI 分析**（必填：`AI_BASE_URL`、`AI_API_KEY`、`AI_MODEL`）
+  - `AI_CONCURRENCY` — 并发数（默认 3）
+  - `AI_VERIFY` — 核查模式（默认开启，设 `false` 关闭）
+  - `AI_BATCH_SIZE` — 每批处理数量（默认 60）
+  - `AI_TEMPERATURE` — 采样温度（默认 0.1）
+  - `AI_MAX_RETRIES` — 最大重试次数（默认 3）
+  - `AI_RETRY_DELAY` — 重试间隔毫秒（默认 2000）
+- **图片上传**
+  - `UPLOAD_MAX_WIDTH` — 最大宽度像素（默认 1200）
+  - `UPLOAD_JPEG_QUALITY` — JPEG 压缩质量（默认 80）
+- **七牛云**（必填：`QINIU_ACCESS_KEY`、`QINIU_SECRET_KEY`、`QINIU_BUCKET`、`QINIU_DOMAIN`）
+  - `QINIU_ZONE` — 存储区域（默认 z0）
 
 ## 备注
 

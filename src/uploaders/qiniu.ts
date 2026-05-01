@@ -1,5 +1,6 @@
 import * as qiniu from 'qiniu';
 import { ImageUploader } from '../types';
+import { qiniu as qiniuConfig } from '../config';
 
 const ZONE_MAP: Record<string, qiniu.conf.Zone> = {
   z0: qiniu.zone.Zone_z0,
@@ -16,11 +17,11 @@ export class QiniuUploader implements ImageUploader {
   private config: qiniu.conf.Config;
 
   constructor() {
-    const accessKey = process.env.QINIU_ACCESS_KEY;
-    const secretKey = process.env.QINIU_SECRET_KEY;
-    const bucket = process.env.QINIU_BUCKET;
-    const domain = process.env.QINIU_DOMAIN;
-    const zone = process.env.QINIU_ZONE || 'z0';
+    const accessKey = qiniuConfig.accessKey;
+    const secretKey = qiniuConfig.secretKey;
+    const bucket = qiniuConfig.bucket;
+    const domain = qiniuConfig.domain;
+    const zone = qiniuConfig.zone;
 
     if (!accessKey || !secretKey || !bucket || !domain) {
       throw new Error(

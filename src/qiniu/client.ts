@@ -1,4 +1,5 @@
 import * as qiniu from 'qiniu';
+import { qiniu as qiniuConfig } from '../config';
 
 const ZONE_MAP: Record<string, qiniu.conf.Zone> = {
   z0: qiniu.zone.Zone_z0,
@@ -11,18 +12,13 @@ const ZONE_MAP: Record<string, qiniu.conf.Zone> = {
 let macInstance: qiniu.auth.digest.Mac | null = null;
 let configInstance: qiniu.conf.Config | null = null;
 
-function getEnvOrThrow(name: string): string {
-  const value = process.env[name];
-  if (!value) {
-    throw new Error(`缺少环境变量: ${name}`);
-  }
-  return value;
-}
-
 export function getMac(): qiniu.auth.digest.Mac {
   if (!macInstance) {
-    const accessKey = getEnvOrThrow('QINIU_ACCESS_KEY');
-    const secretKey = getEnvOrThrow('QINIU_SECRET_KEY');
+    const accessKey = qiniuConfig.accessKey;
+    const secretKey = qiniuConfig.secretKey;
+    if (!accessKey || !secretKey) {
+      throw new Error('缺少环境变量: QINIU_ACCESS_KEY, QINIU_SECRET_KEY');
+    }
     macInstance = new qiniu.auth.digest.Mac(accessKey, secretKey);
   }
   return macInstance;
@@ -30,9 +26,8 @@ export function getMac(): qiniu.auth.digest.Mac {
 
 export function getConfig(): qiniu.conf.Config {
   if (!configInstance) {
-    const zone = process.env.QINIU_ZONE || 'z0';
     configInstance = new qiniu.conf.Config();
-    configInstance.zone = ZONE_MAP[zone] || qiniu.zone.Zone_z0;
+    configInstance.zone = ZONE_MAP[qiniuConfig.zone] || qiniu.zone.Zone_z0;
   }
   return configInstance;
 }

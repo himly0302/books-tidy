@@ -18,6 +18,10 @@
   - `AI_VERIFY` 环境变量控制核查模式（默认开启）
   - BookInfo 新增 `brief` 字段
   - 相关文件：`src/analyzer.ts`、`src/types.ts`、`src/database.ts`
+- **配置集中管理**：新增 `src/config.ts` 统一管理环境变量，提取 6 个硬编码常量为可配置项
+  - 新增环境变量：`AI_BATCH_SIZE`、`AI_TEMPERATURE`、`AI_MAX_RETRIES`、`AI_RETRY_DELAY`、`UPLOAD_MAX_WIDTH`、`UPLOAD_JPEG_QUALITY`
+  - 所有默认值不变，向后兼容
+  - 相关文件：`src/config.ts`、`src/analyzer.ts`、`src/uploader.ts`、`src/uploaders/qiniu.ts`、`src/qiniu/client.ts`
 
 ### Fixed
 - **数据修正**：书籍文件夹无图片时，pic 字段置空而非生成不存在的路径
