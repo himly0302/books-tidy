@@ -73,6 +73,7 @@ books-tidy analyze --input <目录>                  # 预览分析结果
 books-tidy upload-pics --db <json文件> --output <目录>  # 上传图片到图床
 books-tidy import-links --dir <目录>                     # 从 CSV 导入百度网盘链接
 books-tidy export-excel --db <json文件>                   # 导出 Excel 文件（按类型分 sheet）
+books-tidy generate-data --db <json文件>                # 生成前端分类型 JSON 数据并上传七牛云
 books-tidy qiniu buckets                           # 列出所有七牛云空间
 books-tidy qiniu files --bucket <name>             # 列出空间内文件
 books-tidy qiniu delete-bucket --bucket <name>     # 删除空间（先清空文件）
