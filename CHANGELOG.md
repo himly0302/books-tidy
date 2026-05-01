@@ -17,7 +17,8 @@
   - 相关文件：`src/merge.ts`
 - **生成前端数据**：新增 `generate-data` 命令，按类型拆分 JSON 数据并上传七牛云
   - 输出 index.json（类型统计）和分类型 JSON 文件到 `result/configs/`
-  - 自动上传到七牛云（books-tidy/ 前缀，同名覆盖）
+  - 自动上传到七牛云（books-tidy/configs/ 前缀，同名覆盖）
+  - 在 `result/configs.json` 保存类型到七牛云 URL 的映射
   - 相关文件：`src/generate-data.ts`
 
 ### Changed

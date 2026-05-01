@@ -31,7 +31,7 @@ npm start -- tidy --input <目录> --output <目录>      # 运行编译后的 J
 - `src/import-links.ts` — `import-links` 命令编排器；从 CSV 文件导入百度网盘分享链接，按 type+name 匹配并更新 bd_link 字段；生成 result/ 目录副本
 - `src/export-excel.ts` — `export-excel` 命令编排器；按类型分 sheet 生成 Excel 文件（exceljs），输出到 result/ 目录
 - `src/merge.ts` — `merge` 命令编排器；按 sourceFolder 匹配将新数据的 brief 字段合并到旧数据
-- `src/generate-data.ts` — `generate-data` 命令编排器；按类型拆分 JSON 数据到 `result/configs/`，上传七牛云（books-tidy/ 前缀）
+- `src/generate-data.ts` — `generate-data` 命令编排器；按类型拆分 JSON 数据到 `result/configs/`，上传七牛云（books-tidy/configs/ 前缀），保存 URL 映射到 `result/configs.json`
 - `src/types.ts` — 接口定义：`BookRaw`、`BookInfo`（含 bd_link、brief）、`BooksDatabase`、`AIAnalysisResult`（含 brief）及选项类型
 - `src/qiniu/client.ts` — 七牛云共享客户端（认证 + 配置，单例模式）
 - `src/qiniu/bucket-manager.ts` — 七牛云空间管理操作（列空间、列文件、批量删除、删空间）
