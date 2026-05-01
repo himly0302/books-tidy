@@ -9,7 +9,7 @@ interface CsvEntry {
 }
 
 function parseCsv(csvPath: string): CsvEntry[] {
-  const content = fs.readFileSync(csvPath, 'utf-8');
+  const content = fs.readFileSync(csvPath, 'utf-8').replace(/^﻿/, '');
   const lines = content.split(/\r?\n/).filter(line => line.trim());
   if (lines.length <= 1) return [];
 
