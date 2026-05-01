@@ -15,6 +15,10 @@
 - **数据合并**：新增 `merge` 命令，按 sourceFolder 匹配将新数据的 brief 字段合并到旧数据
   - 旧数据保持为基准，仅追加 brief
   - 相关文件：`src/merge.ts`
+- **生成前端数据**：新增 `generate-data` 命令，按类型拆分 JSON 数据并上传七牛云
+  - 输出 index.json（类型统计）和分类型 JSON 文件到 `result/configs/`
+  - 自动上传到七牛云（books-tidy/ 前缀，同名覆盖）
+  - 相关文件：`src/generate-data.ts`
 
 ### Changed
 - **AI 分析增强**：提取书名/作者时同步生成简介（brief），新增核查模式可修正作者信息

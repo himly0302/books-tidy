@@ -9,6 +9,7 @@ import { listBucketsCommand, listFilesCommand, deleteBucketCommand } from './qin
 import { importLinksCommand } from './import-links';
 import { exportExcelCommand } from './export-excel';
 import { mergeCommand } from './merge';
+import { generateDataCommand } from './generate-data';
 
 const program = new Command();
 
@@ -49,6 +50,11 @@ program.command('merge')
   .requiredOption('--old <file>', '旧数据 JSON 文件（基准）')
   .requiredOption('--new <file>', '新数据 JSON 文件（来源 brief）')
   .action(mergeCommand);
+
+program.command('generate-data')
+  .description('生成前端所需的分类型 JSON 数据并上传七牛云')
+  .requiredOption('--db <file>', 'books.json 数据库文件路径')
+  .action(generateDataCommand);
 
 const qiniuCmd = program.command('qiniu').description('七牛云空间管理');
 
