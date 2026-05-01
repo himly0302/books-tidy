@@ -60,7 +60,7 @@ export async function generateDataCommand(options: { db: string }): Promise<void
   for (let i = 0; i < files.length; i++) {
     const fileName = files[i];
     const localPath = path.join(outputDir, fileName);
-    const remoteKey = `books-tidy/${fileName}`;
+    const remoteKey = `books-tidy/configs/${fileName}`;
 
     try {
       const url = await uploader.upload(localPath, remoteKey);
