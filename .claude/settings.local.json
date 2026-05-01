@@ -26,7 +26,8 @@
       "Bash(curl *)",
       "Bash(git checkout *)",
       "Bash(tasklist)",
-      "Bash(taskkill *)"
+      "Bash(taskkill *)",
+      "Bash(claude doctor *)"
     ]
   }
 }
