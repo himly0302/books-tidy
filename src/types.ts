@@ -11,6 +11,7 @@ export interface BookInfo {
   type: string;
   pic: string;
   picUrl?: string;
+  bd_link?: string;
   sourceFolder: string;
   addedAt: string;
 }

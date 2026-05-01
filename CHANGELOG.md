@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+### Added
+- **百度网盘链接导入**：新增 `import-links` 命令，从 CSV 文件批量导入分享链接
+  - 自动解析与 books.json 同级的 CSV 文件（文件名=类型）
+  - 按 type+name 匹配书籍，新增 bd_link 字段
+  - 生成 result/ 目录副本，文件名格式 YYYYMMDD-{数量}.json
+  - 相关文件：`src/import-links.ts`、`src/types.ts`
+
 ### Fixed
 - **数据修正**：书籍文件夹无图片时，pic 字段置空而非生成不存在的路径
   - 相关文件：`src/database.ts`、`src/organizer.ts`、`src/upload-pics.ts`
