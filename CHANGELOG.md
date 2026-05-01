@@ -8,6 +8,10 @@
   - 按 type+name 匹配书籍，新增 bd_link 字段
   - 生成 result/ 目录副本，文件名格式 YYYYMMDD-{数量}.json
   - 相关文件：`src/import-links.ts`、`src/types.ts`
+- **Excel 导出**：新增 `export-excel` 命令，按类型分 sheet 生成 Excel 文件
+  - 每个 sheet 包含：书名、作者、类型、百度云盘、添加时间
+  - 输出到 result/YYYYMMDD-{数量}.xlsx
+  - 相关文件：`src/export-excel.ts`
 
 ### Fixed
 - **数据修正**：书籍文件夹无图片时，pic 字段置空而非生成不存在的路径

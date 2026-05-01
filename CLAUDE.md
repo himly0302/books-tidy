@@ -19,7 +19,7 @@ npm start -- tidy --input <目录> --output <目录>      # 运行编译后的 J
 
 线性流水线：**扫描 → AI 分析 → 整理 → 存储**
 
-- `src/index.ts` — CLI 入口（使用 Commander，包含 `tidy`、`analyze`、`upload-pics`、`import-links`、`qiniu` 子命令）
+- `src/index.ts` — CLI 入口（使用 Commander，包含 `tidy`、`analyze`、`upload-pics`、`import-links`、`export-excel`、`qiniu` 子命令）
 - `src/scanner.ts` — 同步文件系统扫描器；读取子目录，递归查找图片文件
 - `src/analyzer.ts` — 将文件夹名分批发送给 AI API，多批次并发执行；包含重试逻辑（3 次尝试）和 JSON 响应解析（支持 markdown 代码块提取）
 - `src/organizer.ts` — 将文件复制到 `{output}/{类型}/{书名}/` 结构；将首张图片重命名为 `{md5(书名)[:8]}.ext`
@@ -28,6 +28,7 @@ npm start -- tidy --input <目录> --output <目录>      # 运行编译后的 J
 - `src/history.ts` — 全局历史记录管理（`~/.books-tidy/history.json`）；跨目录去重
 - `src/analyze.ts` — 编排预览流程（仅扫描 → 分析）
 - `src/import-links.ts` — `import-links` 命令编排器；从 CSV 文件导入百度网盘分享链接，按 type+name 匹配并更新 bd_link 字段；生成 result/ 目录副本
+- `src/export-excel.ts` — `export-excel` 命令编排器；按类型分 sheet 生成 Excel 文件（exceljs），输出到 result/ 目录
 - `src/types.ts` — 接口定义：`BookRaw`、`BookInfo`（含 bd_link）、`BooksDatabase`、`AIAnalysisResult` 及选项类型
 - `src/qiniu/client.ts` — 七牛云共享客户端（认证 + 配置，单例模式）
 - `src/qiniu/bucket-manager.ts` — 七牛云空间管理操作（列空间、列文件、批量删除、删空间）

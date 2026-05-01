@@ -7,6 +7,7 @@ import { analyzeCommand } from './analyze';
 import { uploadPicsCommand } from './upload-pics';
 import { listBucketsCommand, listFilesCommand, deleteBucketCommand } from './qiniu-manage';
 import { importLinksCommand } from './import-links';
+import { exportExcelCommand } from './export-excel';
 
 const program = new Command();
 
@@ -36,6 +37,11 @@ program.command('import-links')
   .description('从 CSV 文件导入百度网盘分享链接到数据库')
   .requiredOption('--dir <directory>', '包含 books.json 和 CSV 文件的目录')
   .action(importLinksCommand);
+
+program.command('export-excel')
+  .description('按类型分 sheet 导出 Excel 文件')
+  .requiredOption('--db <file>', 'books.json 数据库文件路径')
+  .action(exportExcelCommand);
 
 const qiniuCmd = program.command('qiniu').description('七牛云空间管理');
 
