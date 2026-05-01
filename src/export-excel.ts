@@ -7,6 +7,7 @@ const COLUMNS = [
   { header: '书名', key: 'name', width: 30 },
   { header: '作者', key: 'author', width: 20 },
   { header: '类型', key: 'type', width: 8 },
+  { header: '简介', key: 'brief', width: 40 },
   { header: '百度云盘', key: 'bd_link', width: 50 },
   { header: '添加时间', key: 'addedAt', width: 12 },
 ];
@@ -42,6 +43,7 @@ export async function exportExcelCommand(options: { db: string }): Promise<void>
         name: book.name,
         author: book.author,
         type: book.type,
+        brief: book.brief || '',
         bd_link: book.bd_link || '',
         addedAt: formatDate(book.addedAt),
       });
