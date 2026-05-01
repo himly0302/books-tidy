@@ -16,6 +16,47 @@ npm start -- tidy --input ./raw-books --output ./organized
 npm run dev -- tidy --input ./raw-books --output ./organized
 ```
 
+### 操作流程
+
+以下是一次完整数据整理的步骤：
+
+**第 1 步：整理书籍** `自动`
+```bash
+npm run dev -- tidy --input D:\原始书籍 --output D:\图书合集_done
+```
+> ⚠️ 生成 `books.json` 数据库文件；已处理书籍自动跳过（本地 + 全局历史两级去重）
+
+**第 2 步：上传封面图片** `自动`
+```bash
+npm run dev -- upload-pics --db D:\图书合集_done\books.json --output D:\图书合集_done
+```
+> ⚠️ 每 5 本自动保存，中断后重跑只处理剩余；已有 picUrl 的自动跳过
+
+**第 3 步：上传百度云盘** `手动 ⚠️`
+> 百度云盘 API 仅支持上传到固定路径，生成分享链接需付费，因此手动操作。
+
+1. 将整理后的书籍文件夹（如 `D:\图书合集_done\传记\`）逐个上传到百度云盘
+2. 在百度云盘客户端中按类型批量生成分享链接，导出 CSV 文件
+3. 导出时文件名命名为类型名，如 `传记.csv`，保存到与 books.json 同级目录
+
+CSV 格式：
+```
+文件名,链接,提取码,分享时间,分享状态
+小文艺口袋文库·知人系列,https://pan.baidu.com/s/xxx?pwd=6yk7,6yk7,2026-04-30 18:14,生成成功
+```
+
+**第 4 步：导入分享链接** `自动`
+```bash
+npm run dev -- import-links --dir D:\图书合集_done
+```
+> ⚠️ 同时保存 JSON 副本到项目 `result/` 目录，如 `result/20260501-452.json`
+
+**第 5 步：导出 Excel** `自动`
+```bash
+npm run dev -- export-excel --db D:\图书合集_done\books.json
+```
+> ⚠️ 按类型分 sheet，输出到 `result/` 目录，如 `result/20260501-452.xlsx`
+
 ## 核心功能
 
 - 扫描书籍文件夹，通过 AI 自动提取书名、作者、类型
