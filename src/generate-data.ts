@@ -56,14 +56,17 @@ export async function generateDataCommand(options: { db: string }): Promise<void
 
   let successCount = 0;
   let failCount = 0;
+  const urlMap: Record<string, string> = {};
 
   for (let i = 0; i < files.length; i++) {
     const fileName = files[i];
     const localPath = path.join(outputDir, fileName);
     const remoteKey = `books-tidy/configs/${fileName}`;
+    const keyName = fileName.replace('.json', '');
 
     try {
       const url = await uploader.upload(localPath, remoteKey);
+      urlMap[keyName] = url;
       successCount++;
       console.log(`  [${i + 1}/${files.length}] ${fileName} -> ${url}`);
     } catch (err) {
@@ -72,5 +75,14 @@ export async function generateDataCommand(options: { db: string }): Promise<void
     }
   }
 
+  // 保存 URL 映射到 result/configs.json
+  const resultDir = path.resolve(__dirname, '..', 'result');
+  fs.writeFileSync(
+    path.join(resultDir, 'configs.json'),
+    JSON.stringify(urlMap, null, 2),
+    'utf-8',
+  );
+
   console.log(`\n上传完成: 成功 ${successCount} | 失败 ${failCount}`);
+  console.log(`URL 映射已保存到: ${path.join(resultDir, 'configs.json')}`);
 }
