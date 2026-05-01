@@ -13,6 +13,12 @@
   - 输出到 result/YYYYMMDD-{数量}.xlsx
   - 相关文件：`src/export-excel.ts`
 
+### Changed
+- **AI 分析增强**：提取书名/作者时同步生成简介（brief），新增核查模式可修正作者信息
+  - `AI_VERIFY` 环境变量控制核查模式（默认开启）
+  - BookInfo 新增 `brief` 字段
+  - 相关文件：`src/analyzer.ts`、`src/types.ts`、`src/database.ts`
+
 ### Fixed
 - **数据修正**：书籍文件夹无图片时，pic 字段置空而非生成不存在的路径
   - 相关文件：`src/database.ts`、`src/organizer.ts`、`src/upload-pics.ts`

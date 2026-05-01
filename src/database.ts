@@ -86,6 +86,7 @@ export function addBooks(
       author: analysis.author,
       type: analysis.type,
       pic: hasPic ? `${analysis.type}/${analysis.name}/${picHash}` : '',
+      brief: analysis.brief,
       sourceFolder: book.folderName,
       addedAt: new Date().toISOString(),
     };

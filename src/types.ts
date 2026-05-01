@@ -12,6 +12,7 @@ export interface BookInfo {
   pic: string;
   picUrl?: string;
   bd_link?: string;
+  brief: string;
   sourceFolder: string;
   addedAt: string;
 }
@@ -24,6 +25,7 @@ export interface AIAnalysisResult {
   name: string;
   author: string;
   type: string;
+  brief: string;
 }
 
 export interface TidyOptions {

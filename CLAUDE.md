@@ -29,7 +29,7 @@ npm start -- tidy --input <目录> --output <目录>      # 运行编译后的 J
 - `src/analyze.ts` — 编排预览流程（仅扫描 → 分析）
 - `src/import-links.ts` — `import-links` 命令编排器；从 CSV 文件导入百度网盘分享链接，按 type+name 匹配并更新 bd_link 字段；生成 result/ 目录副本
 - `src/export-excel.ts` — `export-excel` 命令编排器；按类型分 sheet 生成 Excel 文件（exceljs），输出到 result/ 目录
-- `src/types.ts` — 接口定义：`BookRaw`、`BookInfo`（含 bd_link）、`BooksDatabase`、`AIAnalysisResult` 及选项类型
+- `src/types.ts` — 接口定义：`BookRaw`、`BookInfo`（含 bd_link、brief）、`BooksDatabase`、`AIAnalysisResult`（含 brief）及选项类型
 - `src/qiniu/client.ts` — 七牛云共享客户端（认证 + 配置，单例模式）
 - `src/qiniu/bucket-manager.ts` — 七牛云空间管理操作（列空间、列文件、批量删除、删空间）
 - `src/qiniu-manage.ts` — `qiniu` 命令编排器（buckets / files / delete-bucket 子命令）
@@ -40,7 +40,8 @@ npm start -- tidy --input <目录> --output <目录>      # 运行编译后的 J
 - AI 调用采用批量方式：分批发送文件夹名，多批次并发执行（默认并发数 3）
 - 文件为复制（非移动）到输出目录
 - 图片命名使用 MD5 哈希截取前 8 位十六进制字符
-- AI 提示词为中文，指导模型清洗书名（去除营销前缀、卷册标注）、仅保留主要作者、分类到 17 种类型
+- AI 提示词为中文，指导模型清洗书名（去除营销前缀、卷册标注）、仅保留主要作者、分类到 17 种类型、生成一句话简介（brief 20-50 字）
+- 核查模式（`AI_VERIFY`，默认开启）：Prompt 中追加作者信息核查指令，可设为 `false` 关闭
 - 两级去重策略：本地去重（`books.json` 中 `sourceFolder` 精确匹配）→ 全局历史去重（`~/.books-tidy/history.json`）→ 名称级去重（`normalizeBookName` 标准化后匹配，兜底旧记录和 AI 名称不一致）
 
 ## 环境变量
@@ -50,6 +51,7 @@ npm start -- tidy --input <目录> --output <目录>      # 运行编译后的 J
 - `AI_API_KEY` — API 密钥
 - `AI_MODEL` — 模型名称（如 `ZhipuAI/GLM-5.1`）
 - `AI_CONCURRENCY` — AI 分析并发数（默认 3）
+- `AI_VERIFY` — 核查模式开关，设为 `false` 关闭（默认开启）
 
 ## 备注
 

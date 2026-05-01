@@ -103,7 +103,9 @@ function sleep(ms: number): Promise<void> {
 
 function buildPrompt(folderNames: string[]): string {
   const list = folderNames.map((n, i) => `${i + 1}. ${n}`).join('\n');
-  return `你是一个专业的书籍信息提取助手。从以下书籍文件夹名称中提取每本书的书名、作者和分类。
+  const verifyEnabled = process.env.AI_VERIFY !== 'false';
+
+  let rules = `你是一个专业的书籍信息提取助手。从以下书籍文件夹名称中提取每本书的书名、作者、分类和简介。
 
 文件夹列表：
 ${list}
@@ -121,12 +123,27 @@ ${list}
    - 必须综合 name 和 author 内容整体判断
    - 优先选择最贴切的分类，确实无法归类才用"其他"
    - 分类参考：文学、历史、哲学、经济、管理、科技、教育、艺术、政治、社会、心理、传记、医学、法律、军事、学术、其他
+4. brief（简介）：
+   - 用一句话概括这本书的核心内容或主题，20-50字
+   - 不要使用"本书""这本书"等指代词`;
+
+  if (verifyEnabled) {
+    rules += `
+
+5. 核查要求：
+   - 仔细核对文件夹名中的作者姓名与分析结果是否一致
+   - 如果文件夹名包含明确的作者信息但分析结果有误，修正为正确值`;
+  }
+
+  rules += `
 
 请严格按以下 JSON 数组格式返回，不要包含其他文字：
 [
-  {"name": "书名", "author": "作者", "type": "分类"},
+  {"name": "书名", "author": "作者", "type": "分类", "brief": "简介"},
   ...
 ]`;
+
+  return rules;
 }
 
 function parseAIResponse(content: string, folderNames: string[]): AIAnalysisResult[] {
@@ -151,5 +168,6 @@ function parseAIResponse(content: string, folderNames: string[]): AIAnalysisResu
     name: item.name || folderNames[i],
     author: item.author || '未知',
     type: item.type || '其他',
+    brief: item.brief || '',
   }));
 }
