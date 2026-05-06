@@ -36,12 +36,3 @@ export interface TidyOptions {
 export interface AnalyzeOptions {
   input: string;
 }
-
-export interface UploadPicsOptions {
-  db: string;
-  output: string;
-}
-
-export interface ImageUploader {
-  upload(localFilePath: string, remoteKey: string): Promise<string>;
-}
