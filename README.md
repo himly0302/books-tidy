@@ -24,9 +24,9 @@ npm run dev -- tidy --input ./raw-books --output ./organized
 ```bash
 npm run dev -- tidy --input D:\原始书籍 --output D:\图书合集_done
 ```
-> ⚠️ 生成 `books.json` 数据库文件；已处理书籍自动跳过（本地 + 全局历史两级去重）
+> 生成 `books.json` 数据库文件和按类型归类的目录结构；已处理书籍自动跳过（本地 + 全局历史两级去重）；添加 `--force` 可跳过去重重新处理
 
-**第 2 步：上传百度云盘** `手动 ⚠️`
+**第 2 步：上传百度云盘** `手动`
 > 百度云盘 API 仅支持上传到固定路径，生成分享链接需付费，因此手动操作。
 
 1. 将整理后的书籍文件夹（如 `D:\图书合集_done\传记\`）逐个上传到百度云盘
@@ -43,13 +43,19 @@ CSV 格式：
 ```bash
 npm run dev -- import-links --dir D:\图书合集_done
 ```
-> ⚠️ 同时保存 JSON 副本到项目 `result/` 目录，如 `result/20260501-452.json`
+> 同时保存 JSON 副本到项目 `result/` 目录，如 `result/20260501-452.json`
 
 **第 4 步：导出 Excel** `自动`
 ```bash
 npm run dev -- export-excel --db D:\图书合集_done\books.json
 ```
-> ⚠️ 按类型分 sheet，输出到 `result/` 目录，如 `result/20260501-452.xlsx`
+> 按类型分 sheet，输出到 `result/` 目录，如 `result/20260501-452.xlsx`
+
+**第 5 步：生成前端数据** `自动`
+```bash
+npm run dev -- generate-data --dir D:\图书合集_done
+```
+> 按类型拆分 JSON 数据，输出到 `{dir}/assets/books-shop/configs/`，供前端直接使用
 
 ## 核心功能
 
