@@ -110,7 +110,4 @@ export function importLinksCommand(options: { dir: string }): void {
 
   saveDatabase(dbPath, db);
   console.log(`\n匹配结果: ${matched} 条成功, ${unmatched} 条未匹配`);
-
-  const projectRoot = path.resolve(__dirname, '..');
-  saveResult(db, projectRoot);
 }

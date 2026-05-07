@@ -43,7 +43,7 @@ CSV 格式：
 ```bash
 npm run dev -- import-links --dir D:\图书合集_done
 ```
-> 同时保存 JSON 副本到项目 `result/` 目录，如 `result/20260501-452.json`
+> 按 type+name 模糊匹配 CSV 中的分享链接，更新 books.json 中的 bd_link 字段
 
 **第 4 步：导出 Excel** `自动`
 ```bash
