@@ -2,9 +2,10 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { loadDatabase } from './database';
 
-export async function generateDataCommand(options: { db: string }): Promise<void> {
-  const dbPath = path.resolve(options.db);
-  const outputDir = path.resolve(__dirname, '..', 'result', 'configs');
+export async function generateDataCommand(options: { dir: string }): Promise<void> {
+  const dir = path.resolve(options.dir);
+  const dbPath = path.join(dir, 'books.json');
+  const outputDir = path.join(dir, 'assets', 'books-shop');
 
   if (!fs.existsSync(dbPath)) {
     console.error(`数据库文件不存在: ${dbPath}`);

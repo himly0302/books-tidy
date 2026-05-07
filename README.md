@@ -66,7 +66,7 @@ books-tidy tidy --input <目录> --output <目录>   # 整理书籍
 books-tidy analyze --input <目录>                  # 预览分析结果
 books-tidy import-links --dir <目录>               # 从 CSV 导入百度网盘链接
 books-tidy export-excel --db <json文件>            # 导出 Excel 文件（按类型分 sheet）
-books-tidy generate-data --db <json文件>           # 生成前端分类型 JSON 数据
+books-tidy generate-data --dir <目录>              # 生成前端分类型 JSON 数据（输出到 assets/books-shop/）
 ```
 
 ## 环境变量

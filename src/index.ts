@@ -45,7 +45,7 @@ program.command('merge')
 
 program.command('generate-data')
   .description('生成前端所需的分类型 JSON 数据')
-  .requiredOption('--db <file>', 'books.json 数据库文件路径')
+  .requiredOption('--dir <directory>', '包含 books.json 的目录')
   .action(generateDataCommand);
 
 program.parse();
