@@ -31,7 +31,7 @@ npm start -- tidy --input <目录> --output <目录>      # 运行编译后的 J
 - `src/import-links.ts` — `import-links` 命令编排器；从 CSV 文件导入百度网盘分享链接，按 type+name 匹配并更新 bd_link 字段；生成 result/ 目录副本
 - `src/export-excel.ts` — `export-excel` 命令编排器；按类型分 sheet 生成 Excel 文件（exceljs），输出到 result/ 目录
 - `src/merge.ts` — `merge` 命令编排器；按 sourceFolder 匹配将新数据的 brief 字段合并到旧数据
-- `src/generate-data.ts` — `generate-data` 命令编排器；按类型拆分 JSON 数据到 `{dir}/assets/books-shop/`
+- `src/generate-data.ts` — `generate-data` 命令编排器；按类型拆分 JSON 数据到 `{dir}/assets/books-shop/configs/`
 - `src/types.ts` — 接口定义：`BookRaw`、`BookInfo`（含 bd_link、brief）、`BooksDatabase`、`AIAnalysisResult`（含 brief）及选项类型
 
 ## 关键模式
