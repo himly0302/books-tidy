@@ -20,6 +20,7 @@ program.command('tidy')
   .description('扫描并整理书籍文件夹')
   .requiredOption('-i, --input <dir>', '输入目录（原始书籍文件夹）')
   .requiredOption('-o, --output <dir>', '输出目录（整理后的目录）')
+  .option('-f, --force', '强制模式：跳过去重，重新处理所有书籍')
   .action(tidyCommand);
 
 program.command('analyze')

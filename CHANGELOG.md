@@ -39,6 +39,11 @@
   - 相关文件：`src/config.ts`、`src/analyzer.ts`、`src/uploader.ts`、`src/uploaders/qiniu.ts`、`src/qiniu/client.ts`
 
 ### Fixed
+- **整理数量与数据库记录不一致**：organizer 和 addBooks 去重逻辑对齐，名称级去重的书不再复制文件和封面
+  - `addBooks` 返回 `acceptedIndices` 标识实际入库的书
+  - `tidy.ts` 只整理和记录入库的书，避免 assets 图片多于 books.json 记录
+  - AI 返回数量不匹配时自动重试
+  - 相关文件：`src/database.ts`、`src/tidy.ts`、`src/analyzer.ts`
 - **数据修正**：书籍文件夹无图片时，pic 字段置空而非生成不存在的路径
   - 相关文件：`src/database.ts`、`src/organizer.ts`、`src/upload-pics.ts`
 

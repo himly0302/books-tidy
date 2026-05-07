@@ -83,7 +83,17 @@ async function analyzeBatch(
       throw new Error(`Empty AI response after ${ai.maxRetries} retries.`);
     }
 
-    return parseAIResponse(content, folderNames);
+    try {
+      return parseAIResponse(content, folderNames);
+    } catch (e: any) {
+      if (e.message?.startsWith('AI_COUNT_MISMATCH:') && attempt < ai.maxRetries) {
+        const [, got, expected] = e.message.split(':');
+        console.log(`  AI 返回 ${got} 条，期望 ${expected} 条，重试 (${attempt}/${ai.maxRetries})...`);
+        await sleep(ai.retryDelay);
+        continue;
+      }
+      throw e;
+    }
   }
 
   throw new Error('Unexpected: exhausted retries without returning or throwing');
@@ -151,9 +161,8 @@ function parseAIResponse(content: string, folderNames: string[]): AIAnalysisResu
   }
 
   if (!Array.isArray(parsed) || parsed.length !== folderNames.length) {
-    throw new Error(
-      `AI returned ${Array.isArray(parsed) ? parsed.length : 0} results, expected ${folderNames.length}`
-    );
+    const count = Array.isArray(parsed) ? parsed.length : 0;
+    throw new Error(`AI_COUNT_MISMATCH:${count}:${folderNames.length}`);
   }
 
   return parsed.map((item, i) => ({

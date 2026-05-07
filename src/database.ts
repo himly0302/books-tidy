@@ -57,12 +57,18 @@ export function filterDuplicateBooks(
   return { newBooks, skipped };
 }
 
+export interface AddBooksResult {
+  db: BooksDatabase;
+  acceptedIndices: number[];
+}
+
 export function addBooks(
   db: BooksDatabase,
   books: BookRaw[],
   analyses: AIAnalysisResult[],
-): BooksDatabase {
+): AddBooksResult {
   const newDb = { books: [...db.books] };
+  const acceptedIndices: number[] = [];
 
   const existingKeys = new Set(
     newDb.books.map(b => normalizeBookName(b.name) + ':' + b.author)
@@ -75,6 +81,7 @@ export function addBooks(
 
     if (existingKeys.has(nameKey)) continue;
     existingKeys.add(nameKey);
+    acceptedIndices.push(i);
 
     const hasPic = book.pics.length > 0;
     const ext = hasPic ? path.extname(book.pics[0]) : '';
@@ -86,7 +93,7 @@ export function addBooks(
       author: analysis.author,
       type: analysis.type,
       pic: hasPic ? `${analysis.type}/${analysis.name}/${picHash}` : '',
-      picUrl: hasPic ? `assets/books-shop/${picHash}` : undefined,
+      picUrl: hasPic ? `books-shop/${picHash}` : undefined,
       brief: analysis.brief,
       sourceFolder: book.folderName,
       addedAt: new Date().toISOString(),
@@ -94,5 +101,5 @@ export function addBooks(
     newDb.books.push(entry);
   }
 
-  return newDb;
+  return { db: newDb, acceptedIndices };
 }

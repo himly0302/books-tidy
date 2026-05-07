@@ -31,6 +31,7 @@ export interface AIAnalysisResult {
 export interface TidyOptions {
   input: string;
   output: string;
+  force?: boolean;
 }
 
 export interface AnalyzeOptions {

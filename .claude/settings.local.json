@@ -27,7 +27,10 @@
       "Bash(git checkout *)",
       "Bash(tasklist)",
       "Bash(taskkill *)",
-      "Bash(claude doctor *)"
+      "Bash(claude doctor *)",
+      "Bash(git push *)",
+      "Bash(powershell *)",
+      "Bash(npx ts-node *)"
     ]
   }
 }
