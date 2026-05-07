@@ -49,7 +49,7 @@ npm run dev -- import-links --dir D:\图书合集_done
 ```bash
 npm run dev -- export-excel --db D:\图书合集_done\books.json
 ```
-> 按类型分 sheet，输出到 `result/` 目录，如 `result/20260501-452.xlsx`
+> 按类型分 sheet，输出到与 books.json 同级目录，如 `20260507-449.xlsx`
 
 **第 5 步：生成前端数据** `自动`
 ```bash

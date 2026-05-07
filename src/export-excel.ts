@@ -50,8 +50,7 @@ export async function exportExcelCommand(options: { db: string }): Promise<void>
     }
   }
 
-  const resultDir = path.resolve(__dirname, '..', 'result');
-  fs.mkdirSync(resultDir, { recursive: true });
+  const dbDir = path.dirname(dbPath);
 
   const today = new Date();
   const dateStr = [
@@ -60,11 +59,11 @@ export async function exportExcelCommand(options: { db: string }): Promise<void>
     String(today.getDate()).padStart(2, '0'),
   ].join('');
   const fileName = `${dateStr}-${db.books.length}.xlsx`;
-  const filePath = path.join(resultDir, fileName);
+  const filePath = path.join(dbDir, fileName);
 
   await workbook.xlsx.writeFile(filePath);
 
-  console.log(`已生成: result/${fileName}`);
+  console.log(`已生成: ${filePath}`);
   console.log(`共 ${db.books.length} 条，${typeMap.size} 个类型:`);
   for (const [type, books] of typeMap) {
     console.log(`  ${type}: ${books.length} 条`);
