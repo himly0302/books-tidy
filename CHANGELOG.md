@@ -3,6 +3,10 @@
 ## [Unreleased]
 
 ### Added
+- **图片资源本地化**：整理时自动将封面图片副本保存到 assets/books-shop/ 目录
+  - 复用 BookInfo.picUrl 字段记录 assets 相对路径
+  - 供阿里云 ECS 服务器直接提供图片访问
+  - 相关文件：`src/organizer.ts`、`src/database.ts`
 - **百度网盘链接导入**：新增 `import-links` 命令，从 CSV 文件批量导入分享链接
   - 自动解析与 books.json 同级的 CSV 文件（文件名=类型）
   - 按 type+name 匹配书籍，新增 bd_link 字段

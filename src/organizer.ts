@@ -8,6 +8,9 @@ export function organizeBooks(
   analyses: AIAnalysisResult[],
   outputDir: string
 ): void {
+  const assetsDir = path.join(outputDir, 'assets', 'books-shop');
+  fs.mkdirSync(assetsDir, { recursive: true });
+
   for (let i = 0; i < books.length; i++) {
     const book = books[i];
     const analysis = analyses[i];
@@ -29,6 +32,9 @@ export function organizeBooks(
 
       if (relPath === firstPic) {
         fs.copyFileSync(file, path.join(destDir, hashedName));
+        if (hashedName) {
+          fs.copyFileSync(file, path.join(assetsDir, hashedName));
+        }
       } else {
         fs.copyFileSync(file, destFile);
       }
