@@ -8,6 +8,7 @@ import { importLinksCommand } from './import-links';
 import { exportExcelCommand } from './export-excel';
 import { mergeCommand } from './merge';
 import { generateDataCommand } from './generate-data';
+import { copyrightCommand } from './copyright-check';
 
 const program = new Command();
 
@@ -48,5 +49,10 @@ program.command('generate-data')
   .description('生成前端所需的分类型 JSON 数据')
   .requiredOption('--dir <directory>', '包含 books.json 的目录')
   .action(generateDataCommand);
+
+program.command('copyright-check')
+  .description('检查书籍版权状态（预览模式）')
+  .requiredOption('-i, --input <dir>', '输入目录（原始书籍文件夹）')
+  .action(copyrightCommand);
 
 program.parse();

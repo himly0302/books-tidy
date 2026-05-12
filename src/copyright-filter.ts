@@ -1,10 +1,10 @@
 import { BookRaw, CopyrightCheckResult } from './types';
 import { ai } from './config';
 
-export async function filterCopyrightedBooks(books: BookRaw[]): Promise<BookRaw[]> {
+export async function checkCopyright(books: BookRaw[]): Promise<CopyrightCheckResult[]> {
   if (!ai.copyrightFilter) {
     console.log('Copyright filter disabled.');
-    return books;
+    return books.map(b => ({ folderName: b.folderName, status: 'public_domain' as const, reason: '过滤已关闭' }));
   }
 
   if (!ai.baseUrl || !ai.apiKey || !ai.model) {
@@ -38,6 +38,12 @@ export async function filterCopyrightedBooks(books: BookRaw[]): Promise<BookRaw[
   }
 
   const results = allResults.flat();
+  return results;
+}
+
+export async function filterCopyrightedBooks(books: BookRaw[]): Promise<BookRaw[]> {
+  const results = await checkCopyright(books);
+
   const publicDomain = results.filter(r => r.status === 'public_domain');
   const copyrighted = results.filter(r => r.status === 'copyrighted');
   const uncertain = results.filter(r => r.status === 'uncertain');

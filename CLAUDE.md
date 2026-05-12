@@ -19,11 +19,12 @@ npm start -- tidy --input <目录> --output <目录>      # 运行编译后的 J
 
 线性流水线：**扫描 → 侵权过滤 → AI 分析 → 整理 → 存储**
 
-- `src/index.ts` — CLI 入口（使用 Commander，包含 `tidy`、`analyze`、`import-links`、`export-excel`、`merge`、`generate-data` 子命令）
+- `src/index.ts` — CLI 入口（使用 Commander，包含 `tidy`、`analyze`、`import-links`、`export-excel`、`merge`、`generate-data`、`copyright-check` 子命令）
 - `src/scanner.ts` — 同步文件系统扫描器；读取子目录，递归查找图片文件
 - `src/config.ts` — 集中管理所有环境变量配置（AI），提供默认值
 - `src/analyzer.ts` — 将文件夹名分批发送给 AI API，多批次并发执行；包含重试逻辑和 JSON 响应解析（支持 markdown 代码块提取）
 - `src/copyright-filter.ts` — 侵权资源过滤；AI 批量判断版权状态（public_domain / copyrighted / uncertain），保守策略（uncertain 一律跳过）
+- `src/copyright-check.ts` — `copyright-check` 命令编排器；独立预览版权状态，分组展示结果
 - `src/organizer.ts` — 将文件复制到 `{output}/{类型}/{书名}/` 结构；将首张图片重命名为 `{md5(书名)[:8]}.ext`；同时复制封面到 `assets/books-shop/` 目录
 - `src/database.ts` — JSON 持久化（`books.json`）；将新条目合并到已有数据库；本地去重（`filterDuplicateBooks`）和名称标准化（`normalizeBookName`）；`picUrl` 字段记录 `assets/books-shop/` 相对路径
 - `src/tidy.ts` — 编排完整 tidy 流程（扫描 → 侵权过滤 → 去重过滤 → 分析 → 整理 → 保存）

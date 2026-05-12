@@ -73,6 +73,7 @@ resource-tidy analyze --input <目录>                  # 预览分析结果
 resource-tidy import-links --dir <目录>               # 从 CSV 导入百度网盘链接
 resource-tidy export-excel --db <json文件>            # 导出 Excel 文件（按类型分 sheet）
 resource-tidy generate-data --dir <目录>              # 生成前端分类型 JSON 数据（输出到 assets/books-shop/）
+resource-tidy copyright-check --input <目录>           # 检查书籍版权状态（预览模式）
 ```
 
 ## 环境变量

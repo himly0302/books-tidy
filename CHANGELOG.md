@@ -28,6 +28,9 @@
   - `AI_COPYRIGHT_FILTER` 环境变量控制开关（默认开启）
   - 同时影响 tidy 和 analyze 命令
   - 相关文件：`src/copyright-filter.ts`
+- **版权检查命令**：新增 `copyright-check` 命令，独立预览版权状态
+  - 分组展示每本书的判定结果和原因
+  - 相关文件：`src/copyright-check.ts`
 
 ### Changed
 - **generate-data 输出目录调整**：输出从 `result/configs/` 改为 `{dir}/assets/books-shop/configs/`，与封面图片分开存放
