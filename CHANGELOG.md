@@ -51,13 +51,16 @@
 - **数据修正**：书籍文件夹无图片时，pic 字段置空而非生成不存在的路径
   - 相关文件：`src/database.ts`、`src/organizer.ts`
 
+### Changed
+- **移除全局历史去重**：删除 `src/history.ts`，仅保留本地去重和名称级去重
+  - 相关文件：`src/tidy.ts`
+
 ### Added
 - **去重**：整理时自动跳过已处理的书籍，避免重复记录
   - 本地去重：基于 output 目录 books.json 中的 sourceFolder 字段
-  - 全局历史：`~/.resource-tidy/history.json` 跨目录去重
   - 名称标准化兜底：处理 AI 返回名称不一致和旧格式记录
   - BookInfo 新增 sourceFolder 字段
-  - 相关文件：`src/database.ts`、`src/history.ts`、`src/tidy.ts`
+  - 相关文件：`src/database.ts`、`src/tidy.ts`
 - **AI 分析分批处理**：大量书籍自动拆分为多个批次调用 AI API，避免 token 超限导致结果不完整
   - 每批最多处理 30 本书，多批次时显示进度
   - 相关文件：`src/analyzer.ts`

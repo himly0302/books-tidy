@@ -4,7 +4,6 @@ import { scanBooks } from './scanner';
 import { analyzeBooks } from './analyzer';
 import { organizeBooks } from './organizer';
 import { loadDatabase, saveDatabase, addBooks, filterDuplicateBooks } from './database';
-import { filterByGlobalHistory, recordProcessed } from './history';
 import { filterCopyrightedBooks } from './copyright-filter';
 import { TidyOptions } from './types';
 
@@ -36,14 +35,7 @@ export async function tidyCommand(options: TidyOptions) {
     if (localResult.skipped.length > 0) {
       console.log(`Skipped ${localResult.skipped.length} already processed books (local).`);
     }
-
-    // 全局历史去重
-    const globalResult = filterByGlobalHistory(localResult.newBooks, inputDir);
-    if (globalResult.skipped.length > 0) {
-      console.log(`Skipped ${globalResult.skipped.length} already processed books (global history).`);
-    }
-
-    books = globalResult.newBooks;
+    books = localResult.newBooks;
   } else {
     console.log('Force mode: skipping dedup.');
   }
@@ -76,11 +68,6 @@ export async function tidyCommand(options: TidyOptions) {
   organizeBooks(acceptedBooks, acceptedAnalyses, outputDir);
 
   saveDatabase(dbPath, newDb);
-
-  // 记录到全局历史
-  for (const i of acceptedIndices) {
-    recordProcessed(inputDir, outputDir, books[i].folderName, analyses[i].name);
-  }
 
   console.log(`Done! ${acceptedBooks.length} books organized. Database saved to ${dbPath}`);
 }
