@@ -1,7 +1,7 @@
 # generate-data 输出到 assets 目录 - 功能开发文档
 
 > 生成时间：2026-05-07
-> 基于项目：books-tidy
+> 基于项目：resource-tidy
 > 优先级：P1
 
 ---

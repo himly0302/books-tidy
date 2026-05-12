@@ -1,7 +1,7 @@
 # README 操作流程补充 - 功能开发文档
 
 > 生成时间：2026-05-01
-> 基于项目：books-tidy
+> 基于项目：resource-tidy
 
 ---
 

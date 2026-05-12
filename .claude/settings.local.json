@@ -30,7 +30,8 @@
       "Bash(claude doctor *)",
       "Bash(git push *)",
       "Bash(powershell *)",
-      "Bash(npx ts-node *)"
+      "Bash(npx ts-node *)",
+      "Bash(git remote *)"
     ]
   }
 }

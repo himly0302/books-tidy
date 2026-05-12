@@ -1,7 +1,7 @@
 # 生成 Excel 文件 - 功能开发文档
 
 > 生成时间：2026-05-01
-> 基于项目：books-tidy
+> 基于项目：resource-tidy
 
 ---
 

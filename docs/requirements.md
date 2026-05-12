@@ -36,13 +36,13 @@
 
 ```bash
 # 基本用法：扫描并整理书籍
-books-tidy tidy --input ./raw-books --output ./organized
+resource-tidy tidy --input ./raw-books --output ./organized
 
 # 仅分析不移动文件（预览模式）
-books-tidy analyze --input ./raw-books
+resource-tidy analyze --input ./raw-books
 
 # 上传图片到图床
-books-tidy upload-pics --db ./books.json
+resource-tidy upload-pics --db ./books.json
 ```
 
 ### 环境变量
@@ -96,7 +96,7 @@ AI_MODEL=ZhipuAI/GLM-5.1
 ### 项目结构
 
 ```
-books-tidy/
+resource-tidy/
 ├── README.md
 ├── CHANGELOG.md
 ├── package.json

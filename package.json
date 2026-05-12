@@ -1,10 +1,10 @@
 {
-  "name": "books-tidy",
+  "name": "resource-tidy",
   "version": "1.0.0",
   "description": "A CLI tool for tidying books",
   "main": "dist/index.js",
   "bin": {
-    "books-tidy": "dist/index.js"
+    "resource-tidy": "dist/index.js"
   },
   "scripts": {
     "build": "tsc",

@@ -12,8 +12,8 @@ import { generateDataCommand } from './generate-data';
 const program = new Command();
 
 program
-  .name('books-tidy')
-  .description('AI 驱动的书籍文件夹自动整理工具')
+  .name('resource-tidy')
+  .description('AI 驱动的资源文件夹自动整理工具')
   .version('1.0.0');
 
 program.command('tidy')

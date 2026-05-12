@@ -4,7 +4,7 @@
 
 ## 项目概述
 
-Books Tidy 是一个 AI 驱动的 CLI 工具，用于扫描书籍文件夹目录，通过 AI 模型（ModelScope API，OpenAI 兼容的 chat completions 格式）提取元数据（书名、作者、类型），然后将文件复制并整理到按类型分类的目录中，同时规范化命名。工具维护一个 JSON 数据库记录所有已处理的书籍。
+Resource Tidy 是一个 AI 驱动的 CLI 工具，用于扫描书籍文件夹目录，通过 AI 模型（ModelScope API，OpenAI 兼容的 chat completions 格式）提取元数据（书名、作者、类型），然后将文件复制并整理到按类型分类的目录中，同时规范化命名。工具维护一个 JSON 数据库记录所有已处理的书籍。
 
 ## 命令
 
@@ -26,7 +26,7 @@ npm start -- tidy --input <目录> --output <目录>      # 运行编译后的 J
 - `src/organizer.ts` — 将文件复制到 `{output}/{类型}/{书名}/` 结构；将首张图片重命名为 `{md5(书名)[:8]}.ext`；同时复制封面到 `assets/books-shop/` 目录
 - `src/database.ts` — JSON 持久化（`books.json`）；将新条目合并到已有数据库；本地去重（`filterDuplicateBooks`）和名称标准化（`normalizeBookName`）；`picUrl` 字段记录 `assets/books-shop/` 相对路径
 - `src/tidy.ts` — 编排完整 tidy 流程（扫描 → 去重过滤 → 分析 → 整理 → 保存 → 记录全局历史）
-- `src/history.ts` — 全局历史记录管理（`~/.books-tidy/history.json`）；跨目录去重
+- `src/history.ts` — 全局历史记录管理（`~/.resource-tidy/history.json`）；跨目录去重
 - `src/analyze.ts` — 编排预览流程（仅扫描 → 分析）
 - `src/import-links.ts` — `import-links` 命令编排器；从 CSV 文件导入百度网盘分享链接，按 type+name 匹配并更新 bd_link 字段；生成 result/ 目录副本
 - `src/export-excel.ts` — `export-excel` 命令编排器；按类型分 sheet 生成 Excel 文件（exceljs），输出到 result/ 目录
@@ -42,7 +42,7 @@ npm start -- tidy --input <目录> --output <目录>      # 运行编译后的 J
 - 图片命名使用 MD5 哈希截取前 8 位十六进制字符
 - AI 提示词为中文，指导模型清洗书名（去除营销前缀、卷册标注）、仅保留主要作者、分类到 17 种类型、生成一句话简介（brief 20-50 字）
 - 核查模式（`AI_VERIFY`，默认开启）：Prompt 中追加作者信息核查指令，可设为 `false` 关闭
-- 两级去重策略：本地去重（`books.json` 中 `sourceFolder` 精确匹配）→ 全局历史去重（`~/.books-tidy/history.json`）→ 名称级去重（`normalizeBookName` 标准化后匹配，兜底旧记录和 AI 名称不一致）
+- 两级去重策略：本地去重（`books.json` 中 `sourceFolder` 精确匹配）→ 全局历史去重（`~/.resource-tidy/history.json`）→ 名称级去重（`normalizeBookName` 标准化后匹配，兜底旧记录和 AI 名称不一致）
 - 封面图片副本保存到 `assets/books-shop/`，`picUrl` 字段记录相对路径供前端访问
 
 ## 环境变量

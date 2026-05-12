@@ -1,6 +1,6 @@
-# Books Tidy
+# Resource Tidy
 
-AI 驱动的书籍文件夹自动整理工具——按类型归类、规范化命名、一键整理。
+AI 驱动的资源文件夹自动整理工具——按类型归类、规范化命名、一键整理。
 
 ## 快速开始
 
@@ -68,11 +68,11 @@ npm run dev -- generate-data --dir D:\图书合集_done
 ## 命令
 
 ```bash
-books-tidy tidy --input <目录> --output <目录>   # 整理书籍
-books-tidy analyze --input <目录>                  # 预览分析结果
-books-tidy import-links --dir <目录>               # 从 CSV 导入百度网盘链接
-books-tidy export-excel --db <json文件>            # 导出 Excel 文件（按类型分 sheet）
-books-tidy generate-data --dir <目录>              # 生成前端分类型 JSON 数据（输出到 assets/books-shop/）
+resource-tidy tidy --input <目录> --output <目录>   # 整理书籍
+resource-tidy analyze --input <目录>                  # 预览分析结果
+resource-tidy import-links --dir <目录>               # 从 CSV 导入百度网盘链接
+resource-tidy export-excel --db <json文件>            # 导出 Excel 文件（按类型分 sheet）
+resource-tidy generate-data --dir <目录>              # 生成前端分类型 JSON 数据（输出到 assets/books-shop/）
 ```
 
 ## 环境变量

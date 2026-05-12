@@ -1,7 +1,7 @@
 # 优化 AI 分析结果质量 - 需求文档
 
 > 生成时间：2026-04-29
-> 基于项目：books-tidy
+> 基于项目：resource-tidy
 > 技术栈：TypeScript + Commander + OpenAI 兼容 API
 
 ---

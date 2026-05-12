@@ -18,7 +18,7 @@ interface HistoryDatabase {
 }
 
 function getHistoryDir(): string {
-  return path.join(os.homedir(), '.books-tidy');
+  return path.join(os.homedir(), '.resource-tidy');
 }
 
 function getHistoryPath(): string {
