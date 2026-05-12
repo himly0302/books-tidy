@@ -3,7 +3,7 @@
 ## [Unreleased]
 
 ### Added
-- **图片资源本地化**：整理时自动将封面图片副本保存到 assets/books-shop/ 目录
+- **图片资源本地化**：整理时自动将封面图片副本保存到 assets/resource-shop/ 目录
   - 复用 BookInfo.picUrl 字段记录 assets 相对路径
   - 供阿里云 ECS 服务器直接提供图片访问
   - 相关文件：`src/organizer.ts`、`src/database.ts`
@@ -33,7 +33,7 @@
   - 相关文件：`src/copyright-check.ts`
 
 ### Changed
-- **generate-data 输出目录调整**：输出从 `result/configs/` 改为 `{dir}/assets/books-shop/configs/`，与封面图片分开存放
+- **generate-data 输出目录调整**：输出从 `result/configs/` 改为 `{dir}/assets/resource-shop/configs/`，与封面图片分开存放
   - CLI 选项从 `--db` 改为 `--dir`（与 import-links 一致）
   - 相关文件：`src/generate-data.ts`、`src/index.ts`
 - **AI 分析增强**：提取书名/作者时同步生成简介（brief），新增核查模式可修正作者信息

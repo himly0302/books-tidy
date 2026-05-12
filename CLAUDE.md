@@ -25,14 +25,14 @@ npm start -- tidy --input <目录> --output <目录>      # 运行编译后的 J
 - `src/analyzer.ts` — 将文件夹名分批发送给 AI API，多批次并发执行；包含重试逻辑和 JSON 响应解析（支持 markdown 代码块提取）
 - `src/copyright-filter.ts` — 侵权资源过滤；AI 批量判断版权状态（public_domain / copyrighted / uncertain），保守策略（uncertain 一律跳过）
 - `src/copyright-check.ts` — `copyright-check` 命令编排器；独立预览版权状态，分组展示结果
-- `src/organizer.ts` — 将文件复制到 `{output}/{类型}/{书名}/` 结构；将首张图片重命名为 `{md5(书名)[:8]}.ext`；同时复制封面到 `assets/books-shop/` 目录
-- `src/database.ts` — JSON 持久化（`books.json`）；将新条目合并到已有数据库；本地去重（`filterDuplicateBooks`）和名称标准化（`normalizeBookName`）；`picUrl` 字段记录 `assets/books-shop/` 相对路径
+- `src/organizer.ts` — 将文件复制到 `{output}/{类型}/{书名}/` 结构；将首张图片重命名为 `{md5(书名)[:8]}.ext`；同时复制封面到 `assets/resource-shop/` 目录
+- `src/database.ts` — JSON 持久化（`books.json`）；将新条目合并到已有数据库；本地去重（`filterDuplicateBooks`）和名称标准化（`normalizeBookName`）；`picUrl` 字段记录 `assets/resource-shop/` 相对路径
 - `src/tidy.ts` — 编排完整 tidy 流程（扫描 → 侵权过滤 → 去重过滤 → 分析 → 整理 → 保存）
 - `src/analyze.ts` — 编排预览流程（仅扫描 → 侵权过滤 → 分析）
 - `src/import-links.ts` — `import-links` 命令编排器；从 CSV 文件导入百度网盘分享链接，按 type+name 匹配并更新 bd_link 字段；生成 result/ 目录副本
 - `src/export-excel.ts` — `export-excel` 命令编排器；按类型分 sheet 生成 Excel 文件（exceljs），输出到 result/ 目录
 - `src/merge.ts` — `merge` 命令编排器；按 sourceFolder 匹配将新数据的 brief 字段合并到旧数据
-- `src/generate-data.ts` — `generate-data` 命令编排器；按类型拆分 JSON 数据到 `{dir}/assets/books-shop/configs/`
+- `src/generate-data.ts` — `generate-data` 命令编排器；按类型拆分 JSON 数据到 `{dir}/assets/resource-shop/configs/`
 - `src/types.ts` — 接口定义：`BookRaw`、`BookInfo`（含 bd_link、brief）、`BooksDatabase`、`AIAnalysisResult`（含 brief）、`CopyrightCheckResult` 及选项类型
 
 ## 关键模式
@@ -45,7 +45,7 @@ npm start -- tidy --input <目录> --output <目录>      # 运行编译后的 J
 - 核查模式（`AI_VERIFY`，默认开启）：Prompt 中追加作者信息核查指令，可设为 `false` 关闭
 - 两级去重策略：本地去重（`books.json` 中 `sourceFolder` 精确匹配）→ 名称级去重（`normalizeBookName` 标准化后匹配，兜底旧记录和 AI 名称不一致）
 - 侵权过滤（`AI_COPYRIGHT_FILTER`，默认开启）：扫描后 AI 批量判断版权状态，非公有领域和不确定的资源直接跳过，可设为 `false` 关闭
-- 封面图片副本保存到 `assets/books-shop/`，`picUrl` 字段记录相对路径供前端访问
+- 封面图片副本保存到 `assets/resource-shop/`，`picUrl` 字段记录相对路径供前端访问
 
 ## 环境变量
 

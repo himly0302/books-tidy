@@ -93,7 +93,7 @@ export function addBooks(
       author: analysis.author,
       type: analysis.type,
       pic: hasPic ? `${analysis.type}/${analysis.name}/${picHash}` : '',
-      picUrl: hasPic ? `books-shop/${picHash}` : undefined,
+      picUrl: hasPic ? `resource-shop/${picHash}` : undefined,
       brief: analysis.brief,
       sourceFolder: book.folderName,
       addedAt: new Date().toISOString(),

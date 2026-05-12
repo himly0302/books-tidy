@@ -11,11 +11,11 @@
 **技术栈**：TypeScript (ES2020, CommonJS) + Node.js
 **关联模块**：generate-data（`src/generate-data.ts`）
 
-**背景**：`generate-data` 已改为输出到 `{dir}/assets/books-shop/`，但 JSON 数据与封面图片混在同一目录。需将 JSON 数据输出到 `configs` 子目录，与图片文件分开存放。
+**背景**：`generate-data` 已改为输出到 `{dir}/assets/resource-shop/`，但 JSON 数据与封面图片混在同一目录。需将 JSON 数据输出到 `configs` 子目录，与图片文件分开存放。
 
 **目录结构预期**：
 ```
-assets/books-shop/
+assets/resource-shop/
   ├── 20c446b4.jpg          # 封面图片
   ├── 458543ae.jpg
   ├── configs/              # JSON 数据
@@ -28,8 +28,8 @@ assets/books-shop/
 
 ## 2. 验收标准
 
-- [ ] `generate-data` 输出的 JSON 文件位于 `{dir}/assets/books-shop/configs/` 子目录
-- [ ] 封面图片仍在 `assets/books-shop/` 目录下，不受影响
+- [ ] `generate-data` 输出的 JSON 文件位于 `{dir}/assets/resource-shop/configs/` 子目录
+- [ ] 封面图片仍在 `assets/resource-shop/` 目录下，不受影响
 
 ---
 
@@ -49,7 +49,7 @@ assets/books-shop/
 
 **步骤 1：修改 generate-data.ts**
 
-- [ ] `outputDir` 从 `assets/books-shop` 改为 `assets/books-shop/configs`
+- [ ] `outputDir` 从 `assets/resource-shop` 改为 `assets/resource-shop/configs`
 
 改动点：
 ```
@@ -69,7 +69,7 @@ src/generate-data.ts:8 — outputDir 追加 'configs' 段
 
 ```markdown
 ### Changed
-- **generate-data 输出子目录调整**：JSON 数据输出到 `assets/books-shop/configs/`，与封面图片分开存放
+- **generate-data 输出子目录调整**：JSON 数据输出到 `assets/resource-shop/configs/`，与封面图片分开存放
   - 相关文件：`src/generate-data.ts`
 ```
 

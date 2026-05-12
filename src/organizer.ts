@@ -8,7 +8,7 @@ export function organizeBooks(
   analyses: AIAnalysisResult[],
   outputDir: string
 ): void {
-  const assetsDir = path.join(outputDir, 'assets', 'books-shop');
+  const assetsDir = path.join(outputDir, 'assets', 'resource-shop');
   fs.mkdirSync(assetsDir, { recursive: true });
 
   for (let i = 0; i < books.length; i++) {

@@ -11,7 +11,7 @@
 **技术栈**：TypeScript (ES2020, CommonJS) + Node.js
 **关联模块**：generate-data（`src/generate-data.ts`）、CLI 入口（`src/index.ts`）
 
-**背景**：`generate-data` 命令当前将分类型 JSON 数据输出到项目内 `result/configs/`（gitignored）。需要改为输出到 `{dir}/assets/books-shop/`，与封面图片副本同目录，供 ECS 服务器统一提供静态文件访问。
+**背景**：`generate-data` 命令当前将分类型 JSON 数据输出到项目内 `result/configs/`（gitignored）。需要改为输出到 `{dir}/assets/resource-shop/`，与封面图片副本同目录，供 ECS 服务器统一提供静态文件访问。
 
 **现有流程**：
 - `generate-data --db <books.json路径>` → 硬编码输出到 `result/configs/`
@@ -22,7 +22,7 @@
 ## 2. 验收标准
 
 - [ ] `generate-data --dir <目录>` 命令正常执行（`--db` 选项已替换为 `--dir`）
-- [ ] 分类型 JSON 和 `index.json` 输出到 `{dir}/assets/books-shop/` 目录
+- [ ] 分类型 JSON 和 `index.json` 输出到 `{dir}/assets/resource-shop/` 目录
 - [ ] 不再输出到 `result/configs/`
 - [ ] 现有整理、导出、导入等功能未被破坏
 
@@ -33,7 +33,7 @@
 ### 3.1 要实现什么
 
 - `generate-data` 的 CLI 选项从 `--db` 改为 `--dir`，与 `import-links` 保持一致
-- 输出目录从硬编码 `result/configs/` 改为 `{dir}/assets/books-shop/`
+- 输出目录从硬编码 `result/configs/` 改为 `{dir}/assets/resource-shop/`
 - 自动从 `{dir}/books.json` 读取数据库
 
 ### 3.2 与现有功能的关系
@@ -43,7 +43,7 @@
 
 ### 3.3 文件清单
 
-- 修改：`src/generate-data.ts` — 改为接受 `{ dir: string }`，输出到 `assets/books-shop/`
+- 修改：`src/generate-data.ts` — 改为接受 `{ dir: string }`，输出到 `assets/resource-shop/`
 - 修改：`src/index.ts` — `--db` 改为 `--dir`
 
 ### 3.4 新增依赖
@@ -67,19 +67,19 @@ src/index.ts:48 — requiredOption('--db', ...) 改为 requiredOption('--dir', .
 
 - [ ] 函数签名从 `options: { db: string }` 改为 `options: { dir: string }`
 - [ ] 从 `{dir}/books.json` 加载数据库
-- [ ] 输出目录从 `result/configs/` 改为 `{dir}/assets/books-shop/`
+- [ ] 输出目录从 `result/configs/` 改为 `{dir}/assets/resource-shop/`
 
 改动点：
 ```
 src/generate-data.ts:6   — options 类型改为 { dir: string }
 src/generate-data.ts:7   — dbPath 改为从 dir 推导
-src/generate-data.ts:8   — outputDir 改为 assets/books-shop/
+src/generate-data.ts:8   — outputDir 改为 assets/resource-shop/
 ```
 
 **步骤 3：验收检查**
 
 - [ ] 运行 `npm run build` 确认编译通过
-- [ ] 执行 `generate-data --dir D:\测试图书_done`，检查 `assets/books-shop/` 下生成 JSON 文件
+- [ ] 执行 `generate-data --dir D:\测试图书_done`，检查 `assets/resource-shop/` 下生成 JSON 文件
 - [ ] 确认 `result/configs/` 下不再生成新文件
 
 ---
@@ -92,7 +92,7 @@ src/generate-data.ts:8   — outputDir 改为 assets/books-shop/
 
 ```markdown
 ### Changed
-- **generate-data 输出目录调整**：输出从 `result/configs/` 改为 `{dir}/assets/books-shop/`，与封面图片同目录
+- **generate-data 输出目录调整**：输出从 `result/configs/` 改为 `{dir}/assets/resource-shop/`，与封面图片同目录
   - CLI 选项从 `--db` 改为 `--dir`（与 import-links 一致）
   - 相关文件：`src/generate-data.ts`、`src/index.ts`
 ```
