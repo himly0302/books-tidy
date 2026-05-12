@@ -90,6 +90,7 @@ resource-tidy generate-data --dir <目录>              # 生成前端分类型 
 | `AI_TEMPERATURE` | 采样温度 | 0.1 |
 | `AI_MAX_RETRIES` | 最大重试次数 | 3 |
 | `AI_RETRY_DELAY` | 重试间隔（毫秒） | 2000 |
+| `AI_COPYRIGHT_FILTER` | 侵权资源过滤（false 关闭） | true |
 
 ## 文档
 

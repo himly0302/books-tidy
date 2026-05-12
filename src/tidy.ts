@@ -5,6 +5,7 @@ import { analyzeBooks } from './analyzer';
 import { organizeBooks } from './organizer';
 import { loadDatabase, saveDatabase, addBooks, filterDuplicateBooks } from './database';
 import { filterByGlobalHistory, recordProcessed } from './history';
+import { filterCopyrightedBooks } from './copyright-filter';
 import { TidyOptions } from './types';
 
 export async function tidyCommand(options: TidyOptions) {
@@ -18,6 +19,15 @@ export async function tidyCommand(options: TidyOptions) {
 
   console.log('Scanning books...');
   let books = scanBooks(inputDir);
+
+  console.log('Filtering copyrighted resources...');
+  books = await filterCopyrightedBooks(books);
+
+  if (books.length === 0) {
+    console.log('All resources are copyrighted or uncertain. Nothing to do.');
+    return;
+  }
+
   const dbPath = path.join(outputDir, 'books.json');
   const db = loadDatabase(dbPath);
 

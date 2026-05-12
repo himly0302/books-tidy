@@ -28,6 +28,12 @@ export interface AIAnalysisResult {
   brief: string;
 }
 
+export interface CopyrightCheckResult {
+  folderName: string;
+  status: 'public_domain' | 'copyrighted' | 'uncertain';
+  reason: string;
+}
+
 export interface TidyOptions {
   input: string;
   output: string;

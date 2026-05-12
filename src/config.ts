@@ -20,4 +20,5 @@ export const ai = {
   get temperature() { return floatEnv('AI_TEMPERATURE', 0.1); },
   get maxRetries() { return intEnv('AI_MAX_RETRIES', 3); },
   get retryDelay() { return intEnv('AI_RETRY_DELAY', 2000); },
+  get copyrightFilter() { return process.env.AI_COPYRIGHT_FILTER !== 'false'; },
 };

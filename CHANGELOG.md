@@ -22,6 +22,12 @@
 - **生成前端数据**：新增 `generate-data` 命令，按类型拆分 JSON 数据
   - 输出 index.json（类型统计）和分类型 JSON 文件
   - 相关文件：`src/generate-data.ts`
+- **侵权资源过滤**：扫描后自动过滤非公有领域资源，仅整理非侵权内容
+  - AI 批量判断版权状态（public_domain / copyrighted / uncertain）
+  - 无法确认的资源自动跳过（保守策略）
+  - `AI_COPYRIGHT_FILTER` 环境变量控制开关（默认开启）
+  - 同时影响 tidy 和 analyze 命令
+  - 相关文件：`src/copyright-filter.ts`
 
 ### Changed
 - **generate-data 输出目录调整**：输出从 `result/configs/` 改为 `{dir}/assets/books-shop/configs/`，与封面图片分开存放
