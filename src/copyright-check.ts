@@ -45,4 +45,8 @@ export async function copyrightCommand(options: AnalyzeOptions) {
   }
 
   console.log(`\n总计: 非侵权 ${grouped.public_domain.length}, 侵权 ${grouped.copyrighted.length}, 不确定 ${grouped.uncertain.length}`);
+
+  const outputPath = path.join(inputDir, 'copyright-check.json');
+  fs.writeFileSync(outputPath, JSON.stringify(results, null, 2), 'utf-8');
+  console.log(`\n结果已保存到 ${outputPath}`);
 }
